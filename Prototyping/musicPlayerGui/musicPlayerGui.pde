@@ -5,6 +5,13 @@ fullScreen();
 //scrH = screen height
 //scrW = screen width
 
+//to-do list:
+//mouse interaction
+//spritework
+//keyboard interaction
+//adding songs
+//adding dialogue
+
 
 //variable declaration
 int hr = 11;
