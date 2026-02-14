@@ -1,5 +1,8 @@
+//setup
+void setup() {
 fullScreen();
-
+background(0);
+}
 //cH = common height
 //cW = common width
 //scrH = screen height
@@ -7,11 +10,11 @@ fullScreen();
 
 //to-do list:
 //mouse interaction
-//spritework
-//keyboard interaction
+//spritework - partially done
+//keyboard interaction - partially done
 //adding songs
-//adding dialogue
-
+//adding dialogue - framework complete
+void draw() {
 
 //variable declaration
 int hr = 11;
@@ -19,6 +22,12 @@ float scrH = displayHeight;
 float scrW = displayWidth;
 float cW = scrW/9;
 float cH = scrH/hr;
+PFont common;
+common = createFont("common.ttf", 46);
+String[] dialogue;
+dialogue = loadStrings("Dialogue.txt");
+
+
 
 //shop background
 PImage shop; 
@@ -61,11 +70,15 @@ float exitDivWH = scrW/25;
 rect(exitDivX, 0, exitDivWH, exitDivWH);
 
 //dialogue box
-float dialogueDivX = cH + 2*cW;
-float dialogueDivY = 5*scrH/9;
-float dialogueDivW = (26*scrW/45) - cH;
-float dialogueDivH = 4*scrH/9;
-rect(dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
+float dialogueDivX = cH + 1.9*cW;
+float dialogueDivY = 24*scrH/45;
+float dialogueDivW = scrW - (2*cH/3 + 2*cW);
+float dialogueDivH = 12*scrH/25;
+//rect(dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
+
+PImage dialogueBox;
+dialogueBox = loadImage("DialogueBox.png");
+  image(dialogueBox, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
 
 //options
 float optDivX = 4*scrW/5;
@@ -73,10 +86,10 @@ float optDivY = 5*scrH/9;
 float optDivW = scrW/5;
 
 //options stack
-for(int j=1; j<=5; j=j+1) {
-  rect(optDivX, optDivY, optDivW, cH);
-  optDivY = (5*scrH/9) + j*cH;
-}
+//for(int j=1; j<=5; j=j+1) {
+ // rect(optDivX, optDivY, optDivW, cH);
+//  optDivY = (5*scrH/9) + j*cH;
+//}
 
 //popop
 float popupY = 0;
@@ -84,5 +97,98 @@ float popupX = 0;
 popupX = random(cH + 2*cW, scrW - cW);
 popupY = random(0, scrH - 4*scrH/9 - cW);
 
-println(popupX);
-println(popupY);
+textFont(common);
+text(dialogue[0], cH+11*cW/5, 11*scrH/18);
+for(int z=0; z<=3; z=z+1){
+  text(dialogue[z], cH+11*cW/5, (1.5*z+11)*scrH/18);
+}
+
+//text(dialogue[1], cH+11*cW/5, 12*scrH/18);
+//text(dialogue[2], cH+11*cW/5, 13*scrH/18);
+//text(dialogue[3], cH+11*cW/5, 14*scrH/18);
+
+//popup
+PImage popup;
+popup = loadImage("Popup.png");
+//image(popup, popupX, popupY, cW, cW);
+
+
+
+
+textFont(common);
+text("I'M FEELING", 81*scrW/100, 5*scrH/9 + 3*cH/4);
+text("LUCKY", 81*scrW/100, 5*scrH/9 + 5*cH/4);
+text("SETTINGS", 81*scrW/100, 5*scrH/9 + 7*cH/4);
+text("TALKING", 81*scrW/100, 5*scrH/9 + 11*cH/4);
+text("ESCAPE", 81*scrW/100, 5*scrH/9 + 15*cH/4);
+text("1997 KROMER", 39*scrW/50, 5*scrH/9 + 4.4*cH);
+
+
+
+
+//menu movement
+
+
+PImage soul;
+soul = loadImage("SOUL.png");
+image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
+
+}
+
+
+
+int menuY = 0;
+
+void keyPressed(){
+  if (key == CODED) {
+    if(keyCode == UP) {
+      menuY = menuY - 1;
+      if(menuY < 0) {
+        menuY = 3;
+      }
+    } else if (keyCode == DOWN) {
+      menuY = menuY + 1;
+      if(menuY > 3) {
+        menuY = 0;
+      }
+    }
+  } else if(key == 'z' || key == ENTER){
+    if(menuY==0){
+      luck();
+    } else if(menuY==1) {
+      options();
+    }
+    else if(menuY==2) {
+      advanceDialogue();
+    }
+    else if(menuY==3) {
+      escape();
+    }
+  }
+}
+
+
+float scrW = displayWidth;
+float scrH = displayHeight;
+//menu buttons
+
+
+//I'm feeling lucky
+void luck(){
+  text("TESTING", scrW/2, scrH/2);
+}
+
+//Settings
+void options(){
+  
+}
+
+//Talking
+void advanceDialogue(){
+  
+}
+
+//Escape
+void escape(){
+  exit();
+}
