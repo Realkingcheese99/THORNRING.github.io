@@ -1,9 +1,9 @@
 //setup
 
-String testing = "HEY EVERY         !" ;
+
 int charDisplay = 0;
 int xz = 0;
-String empty = "";
+
 
 void setup() {
 fullScreen();
@@ -31,9 +31,12 @@ float scrW = displayWidth;
 float cW = scrW/9;
 float cH = scrH/hr;
 PFont common;
-common = createFont("common.ttf", 46);
+common = createFont("common.ttf", 32);
 String[] dialogue;
 dialogue = loadStrings("Dialogue.txt");
+
+PImage exit;
+exit = loadImage("Exit.png");
 
 luck();
 
@@ -76,10 +79,11 @@ PImage neutral;
 neutral = loadImage("spamNeutral.png");
 image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
 
-//exit button
+//exit button 
 float exitDivX = 24*scrW/25;
 float exitDivWH = scrW/25;
-rect(exitDivX, 0, exitDivWH, exitDivWH);
+//rect(exitDivX, 0, exitDivWH, exitDivWH);
+image(exit, exitDivX, 0, exitDivWH, exitDivWH);
 
 //dialogue box
 float dialogueDivX = cH + 1.9*cW;
@@ -109,22 +113,29 @@ float popupX = 0;
 popupX = random(cH + 2*cW, scrW - cW);
 popupY = random(0, scrH - 4*scrH/9 - cW);
 
-int totalD = dialogue[0].length() + dialogue[1].length() + dialogue[2].length() + dialogue[3].length();
 
 
-println(dialogue[xz].charAt(charDisplay+1));
+//DIALOGUE
+
+int totalD = (dialogue[0].length() + dialogue[1].length() + dialogue[2].length() + dialogue[3].length())/2;
+int charSpd = 2;
+
+//println(dialogue[xz].charAt(charDisplay+1));
 if(xz < dialogue.length-1) {
 if(str(dialogue[xz].charAt(charDisplay+1)).equals("-")) {
   xz++;
   charDisplay = 0;
   println(xz);
 }
-text(dialogue[xz].substring(0, 2*charDisplay), cH+11*cW/5, (1.5*(xz+1))+(11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH);
+
  if(charDisplay < totalD) { 
    charDisplay++;
  }
  else if(charDisplay >= totalD) {
-   charDisplay = totalD-1; }
+   charDisplay = totalD-1;}
+
+text(dialogue[xz].substring(0, charSpd*charDisplay), cH+11*cW/5, (1.5*(xz+1))+(11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH);
+
 }
 
 //String[] jD = new String[2];
