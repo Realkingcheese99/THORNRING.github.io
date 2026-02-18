@@ -1,8 +1,16 @@
 //setup
+
+String testing = "HEY EVERY         !" ;
+int charDisplay = 0;
+int xz = 0;
+String empty = "";
+
 void setup() {
 fullScreen();
 background(0);
 }
+
+
 //cH = common height
 //cW = common width
 //scrH = screen height
@@ -27,12 +35,16 @@ common = createFont("common.ttf", 46);
 String[] dialogue;
 dialogue = loadStrings("Dialogue.txt");
 
+luck();
+
 
 
 //shop background
 PImage shop; 
 shop = loadImage("shop.png");
   image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
+
+
 
 
 
@@ -97,11 +109,36 @@ float popupX = 0;
 popupX = random(cH + 2*cW, scrW - cW);
 popupY = random(0, scrH - 4*scrH/9 - cW);
 
-textFont(common);
-text(dialogue[0], cH+11*cW/5, 11*scrH/18);
-for(int z=0; z<=3; z=z+1){
-  text(dialogue[z], cH+11*cW/5, (1.5*z+11)*scrH/18);
+int totalD = dialogue[0].length() + dialogue[1].length() + dialogue[2].length() + dialogue[3].length();
+
+
+println(dialogue[xz].charAt(charDisplay+1));
+if(xz < dialogue.length-1) {
+if(str(dialogue[xz].charAt(charDisplay+1)).equals("-")) {
+  xz++;
+  charDisplay = 0;
+  println(xz);
 }
+text(dialogue[xz].substring(0, 2*charDisplay), cH+11*cW/5, (1.5*(xz+1))+(11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH);
+ if(charDisplay < totalD) { 
+   charDisplay++;
+ }
+ else if(charDisplay >= totalD) {
+   charDisplay = totalD-1; }
+}
+
+//String[] jD = new String[2];
+//jD[0] = "";
+//jD[1] = "";
+//String cD = "";
+//textFont(common);
+//text(dialogue[0], cH+11*cW/5, 11*scrH/18);
+//for(int z=0; z<dialogue[0].length(); z=z+1){
+ // jD[1] = str(dialogue[0].charAt(z));
+ // jD[0] = join(jD,"");
+ // text(jD[0], cH+11*cW/5, (11)*scrH/18);
+ // println(jD[0]);
+//}
 
 //text(dialogue[1], cH+11*cW/5, 12*scrH/18);
 //text(dialogue[2], cH+11*cW/5, 13*scrH/18);
@@ -114,7 +151,7 @@ popup = loadImage("Popup.png");
 
 
 
-
+//menu labels
 textFont(common);
 text("I'M FEELING", 81*scrW/100, 5*scrH/9 + 3*cH/4);
 text("LUCKY", 81*scrW/100, 5*scrH/9 + 5*cH/4);
@@ -124,19 +161,14 @@ text("ESCAPE", 81*scrW/100, 5*scrH/9 + 15*cH/4);
 text("1997 KROMER", 39*scrW/50, 5*scrH/9 + 4.4*cH);
 
 
-
-
 //menu movement
-
-
 PImage soul;
 soul = loadImage("SOUL.png");
 image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
 
-}
+} //END OF DRAW FUNCTION
 
-
-
+//menu movement keyboard control
 int menuY = 0;
 
 void keyPressed(){
