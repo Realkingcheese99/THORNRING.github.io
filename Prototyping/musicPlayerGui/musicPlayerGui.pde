@@ -118,7 +118,7 @@ popupY = random(0, scrH - 4*scrH/9 - cW);
 //DIALOGUE
 
 int totalD = (dialogue[0].length() + dialogue[1].length() + dialogue[2].length() + dialogue[3].length())/2;
-int charSpd = 2;
+int charSpd = 1;
 
 //println(dialogue[xz].charAt(charDisplay+1));
 if(xz < dialogue.length-1) {
