@@ -118,7 +118,7 @@ popupY = random(0, scrH - 4*scrH/9 - cW);
 //DIALOGUE
 
 int totalD = (dialogue[0].length() + dialogue[1].length() + dialogue[2].length() + dialogue[3].length())/2;
-int charSpd = 1;
+int charSpd = 2;
 
 //println(dialogue[xz].charAt(charDisplay+1));
 if(xz < dialogue.length-1) {
@@ -131,8 +131,9 @@ if(str(dialogue[xz].charAt(charDisplay+1)).equals("-")) {
  if(charDisplay < totalD) { 
    charDisplay++;
  }
- else if(charDisplay >= totalD) {
-   charDisplay = totalD-1;}
+
+if(charDisplay >= totalD) {
+   charDisplay = floor(totalD/charSpd) -charSpd;}
 
 text(dialogue[xz].substring(0, charSpd*charDisplay), cH+11*cW/5, (1.5*(xz+1))+(11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH);
 
