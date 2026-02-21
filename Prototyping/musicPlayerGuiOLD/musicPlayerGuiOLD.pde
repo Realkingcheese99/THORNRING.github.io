@@ -1,15 +1,11 @@
 //setup
-
-
 int charDisplay = 0;
 int xz = 0;
-
 
 void setup() {
 fullScreen();
 background(0);
 }
-
 
 //cH = common height
 //cW = common width
@@ -31,41 +27,43 @@ float scrW = displayWidth;
 float cW = scrW/9;
 float cH = scrH/hr;
 PFont common;
-common = createFont("common.ttf", 32);
+common = createFont("common.ttf", 46);
 String[] dialogue;
 dialogue = loadStrings("Dialogue.txt");
 
-PImage exit;
-exit = loadImage("Exit.png");
+//image loading
+exitImage = loadImage("Exit.png");
+aCoverBox = loadImage("albumcover.png");
+shop = loadImage("shop.png");
+neutral = loadImage("spamNeutral.png");
+dialogueBox = loadImage("DialogueBox.png");
+popup = loadImage("Popup.png");
+soul = loadImage("SOUL.png");
+songTitleBox = loadImage("box.png");
+FRIEND = loadImage("IMAGE_FRIEND");
 
-luck();
 
 
 
 //shop background
-PImage shop; 
-shop = loadImage("shop.png");
   image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
 
 
 
 
-
-//album cover list
-float albumDivY = 0;
-
 //song list
-float songlistDivY = 0;
+float songlistDivY = -scrW/250;
 float songlistDivW = 2*cW;
 
 
 //album and song stack
 
 for(int z=1; z <= hr;z=z+1){
-  rect(0, albumDivY, cH, cH);
-  albumDivY=z*cH;
-  rect(cH, songlistDivY, songlistDivW, cH);
-  songlistDivY=z*scrH/hr;
+  //rect(0, albumDivY, cH, cH);
+  image(aCoverBox, 0, songlistDivY, 5*cH/4, 5*cH/4);
+  image(songTitleBox, 21*cH/20, songlistDivY, songlistDivW, 5*cH/4);
+  //songlistDivY=z*cH;
+  songlistDivY=songlistDivY+100*cH/101;
 }
 
 //spamton box
@@ -75,15 +73,13 @@ float spamDivW = 2.3*cW;
 float spamDivH = 2.7*cW;
 //rect(spamDivX, spamDivY, spamDivW, spamDivH); //old code for adding box placeholder
 
-PImage neutral;
-neutral = loadImage("spamNeutral.png");
 image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
 
 //exit button 
 float exitDivX = 24*scrW/25;
 float exitDivWH = scrW/25;
 //rect(exitDivX, 0, exitDivWH, exitDivWH);
-image(exit, exitDivX, 0, exitDivWH, exitDivWH);
+image(exitImage, exitDivX, 0, exitDivWH, exitDivWH);
 
 //dialogue box
 float dialogueDivX = cH + 1.9*cW;
@@ -91,10 +87,7 @@ float dialogueDivY = 24*scrH/45;
 float dialogueDivW = scrW - (2*cH/3 + 2*cW);
 float dialogueDivH = 12*scrH/25;
 //rect(dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
-
-PImage dialogueBox;
-dialogueBox = loadImage("DialogueBox.png");
-  image(dialogueBox, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
+image(dialogueBox, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
 
 //options
 float optDivX = 4*scrW/5;
@@ -118,7 +111,7 @@ popupY = random(0, scrH - 4*scrH/9 - cW);
 //DIALOGUE
 
 int totalD = (dialogue[0].length() + dialogue[1].length() + dialogue[2].length() + dialogue[3].length())/2;
-int charSpd = 2;
+int charSpd = 1;
 
 //println(dialogue[xz].charAt(charDisplay+1));
 if(xz < dialogue.length-1) {
@@ -157,8 +150,6 @@ text(dialogue[xz].substring(0, charSpd*charDisplay), cH+11*cW/5, (1.5*(xz+1))+(1
 //text(dialogue[3], cH+11*cW/5, 14*scrH/18);
 
 //popup
-PImage popup;
-popup = loadImage("Popup.png");
 //image(popup, popupX, popupY, cW, cW);
 
 
@@ -174,8 +165,6 @@ text("1997 KROMER", 39*scrW/50, 5*scrH/9 + 4.4*cH);
 
 
 //menu movement
-PImage soul;
-soul = loadImage("SOUL.png");
 image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
 
 } //END OF DRAW FUNCTION
@@ -214,25 +203,3 @@ void keyPressed(){
 
 float scrW = displayWidth;
 float scrH = displayHeight;
-//menu buttons
-
-
-//I'm feeling lucky
-void luck(){
-  text("TESTING", scrW/2, scrH/2);
-}
-
-//Settings
-void options(){
-  
-}
-
-//Talking
-void advanceDialogue(){
-  
-}
-
-//Escape
-void escape(){
-  exit();
-}
