@@ -40,10 +40,15 @@ dialogueBox = loadImage("DialogueBox.png");
 popup = loadImage("Popup.png");
 soul = loadImage("SOUL.png");
 songTitleBox = loadImage("box.png");
-FRIEND = loadImage("IMAGE_FRIEND");
+FRIEND = loadImage("IMAGE_FRIEND.png");
 
 
 
+if(checker != 0) {
+  println("test");
+  image(FRIEND, (scrW-checker)/2, (scrH-checker)/2, 536, 497);
+}
+  
 
 //shop background
   image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
