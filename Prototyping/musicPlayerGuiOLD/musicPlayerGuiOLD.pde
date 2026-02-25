@@ -1,10 +1,17 @@
 //setup
 int charDisplay = 0;
 int xz = 0;
+int hr = 11;
+float scrH = displayHeight;
+float scrW = displayWidth;
+float cW = scrW/9;
+float cH = scrH/hr;
+PFont common;
 
 void setup() {
 fullScreen();
 background(0);
+
 }
 
 //cH = common height
@@ -18,6 +25,7 @@ background(0);
 //keyboard interaction - partially done
 //adding songs
 //adding dialogue - framework complete
+//debug dialogue
 void draw() {
 
 //variable declaration
@@ -27,7 +35,10 @@ float scrW = displayWidth;
 float cW = scrW/9;
 float cH = scrH/hr;
 PFont common;
-common = createFont("common.ttf", 46);
+//home
+//common = createFont("common.ttf", 46);
+//school
+common = createFont("common.ttf", 32);
 String[] dialogue;
 dialogue = loadStrings("Dialogue.txt");
 
@@ -116,7 +127,7 @@ popupY = random(0, scrH - 4*scrH/9 - cW);
 //DIALOGUE
 
 int totalD = (dialogue[0].length() + dialogue[1].length() + dialogue[2].length() + dialogue[3].length())/2;
-int charSpd = 1;
+int charSpd = 2;
 
 //println(dialogue[xz].charAt(charDisplay+1));
 if(xz < dialogue.length-1) {
@@ -126,13 +137,12 @@ if(str(dialogue[xz].charAt(charDisplay+1)).equals("-")) {
   println(xz);
 }
 
- if(charDisplay < totalD) { 
+ if(charDisplay < dialogue[0].length()) { 
    charDisplay++;
  }
 
-if(charDisplay >= totalD) {
-   charDisplay = floor(totalD/charSpd) -charSpd;}
-
+if(charDisplay*charSpd >= dialogue[0].length()) {
+   charDisplay = (dialogue[0].length())/charSpd;}
 text(dialogue[xz].substring(0, charSpd*charDisplay), cH+11*cW/5, (1.5*(xz+1))+(11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH);
 
 }
@@ -204,7 +214,3 @@ void keyPressed(){
     }
   }
 }
-
-
-float scrW = displayWidth;
-float scrH = displayHeight;
