@@ -7,6 +7,8 @@ PImage popup;
 PImage soul;
 PImage songTitleBox;
 PImage FRIEND;
+PImage pause;
+PImage pause2;
 
 //int hr = 11;
 //float scrH = displayHeight;

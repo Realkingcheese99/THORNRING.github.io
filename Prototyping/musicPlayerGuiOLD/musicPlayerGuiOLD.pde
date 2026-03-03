@@ -8,6 +8,7 @@ float cW = scrW/9;
 float cH = scrH/hr;
 PFont common;
 
+
 void setup() {
 fullScreen();
 background(0);
@@ -27,6 +28,7 @@ background(0);
 //adding dialogue - framework complete
 //debug dialogue
 void draw() {
+
 
 //variable declaration
 int hr = 11;
@@ -52,6 +54,8 @@ popup = loadImage("Popup.png");
 soul = loadImage("SOUL.png");
 songTitleBox = loadImage("box.png");
 FRIEND = loadImage("IMAGE_FRIEND.png");
+pause = loadImage("BTN/pause_1.png");
+pause2 = loadImage("BTN/pause_2.png");
 
 
 
@@ -181,6 +185,8 @@ text("1997 KROMER", 39*scrW/50, 5*scrH/9 + 4.4*cH);
 
 //menu movement
 image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
+
+image(pause, scrW/2, scrH/2, 3*cW/2, 3*cW/2);
 
 } //END OF DRAW FUNCTION
 
