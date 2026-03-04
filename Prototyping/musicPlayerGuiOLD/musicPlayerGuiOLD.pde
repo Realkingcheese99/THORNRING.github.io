@@ -2,18 +2,22 @@
 int charDisplay = 0;
 int xz = 0;
 int hr = 11;
-float scrH = displayHeight;
-float scrW = displayWidth;
-float cW = scrW/9;
-float cH = scrH/hr;
+float GscrH = displayHeight;
+float GscrW = displayWidth;
+float GcW = GscrW/9;
+float GcH = GscrH/hr;
 PFont common;
-
+float popupY = random(0, GscrH - 4*GscrH/9 - GcW);
+float popupX = random(GcH + 2*GcW, GscrW - GcW);
 
 void setup() {
 fullScreen();
 background(0);
 
+
 }
+
+
 
 //cH = common height
 //cW = common width
@@ -28,6 +32,7 @@ background(0);
 //adding dialogue - framework complete
 //debug dialogue
 void draw() {
+  
 
 
 //variable declaration
@@ -43,6 +48,7 @@ PFont common;
 common = createFont("common.ttf", 32);
 String[] dialogue;
 dialogue = loadStrings("Dialogue.txt");
+
 
 //image loading
 exitImage = loadImage("Exit.png");
@@ -121,10 +127,6 @@ float optDivW = scrW/5;
 //}
 
 //popop
-float popupY = 0;
-float popupX = 0;
-popupX = random(cH + 2*cW, scrW - cW);
-popupY = random(0, scrH - 4*scrH/9 - cW);
 
 
 
@@ -188,7 +190,12 @@ image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
 
 image(pause, scrW/2, scrH/2, 3*cW/2, 3*cW/2);
 
+image(popup, popupX, popupY, cW, cW);
+println(popupX," , ",popupY);
+
 } //END OF DRAW FUNCTION
+
+
 
 //menu movement keyboard control
 int menuY = 0;
@@ -218,5 +225,9 @@ void keyPressed(){
     else if(menuY==3) {
       escape();
     }
+  }
+  else if(key == 'c'){
+  popupY = popupY+100;
+  popupX = random(GcH + 2*GcW, GscrW - GcW);
   }
 }
