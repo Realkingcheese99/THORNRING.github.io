@@ -9,6 +9,8 @@ float GcH = GscrH/hr;
 PFont common;
 float popupY = random(0, GscrH - 4*GscrH/9 - GcW);
 float popupX = random(GcH + 2*GcW, GscrW - GcW);
+float testing = random(1, 10);
+int frmc = frameCount;
 
 void setup() {
 fullScreen();
@@ -33,6 +35,7 @@ background(0);
 //debug dialogue
 void draw() {
   
+frmc = frameCount;  
 
 
 //variable declaration
@@ -190,8 +193,11 @@ image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
 
 image(pause, scrW/2, scrH/2, 3*cW/2, 3*cW/2);
 
-image(popup, popupX, popupY, cW, cW);
-println(popupX," , ",popupY);
+//image(popup, popupX, popupY, cW, cW);
+//println(popupX," , ",popupY);
+
+textFont(common);
+  text(frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+1)*scrW/100, cH/2);
 
 } //END OF DRAW FUNCTION
 
