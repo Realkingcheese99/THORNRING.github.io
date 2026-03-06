@@ -1,6 +1,6 @@
 //I'm feeling lucky
 void luck(){
-  text("TESTING", GscrW/2, GscrH/2);
+  text("TESTING", scrW/2, scrH/2);
 }
 
 //Settings

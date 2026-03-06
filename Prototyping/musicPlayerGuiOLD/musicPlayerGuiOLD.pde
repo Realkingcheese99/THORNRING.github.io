@@ -1,25 +1,71 @@
+//NOTE: I KNOW THAT IT'S BROKEN, I'M TRYING TO OPTIMIZE IT, HOLD OFF UNTIL TOMORROW TO JUDGE
+
 //setup
 int charDisplay = 0;
 int xz = 0;
 int hr = 11;
-float GscrH = displayHeight;
-float GscrW = displayWidth;
-float GcW = GscrW/9;
-float GcH = GscrH/hr;
+//float scrH = displayHeight;
+//float scrW = displayWidth;
 PFont common;
-float popupY = random(0, GscrH - 4*GscrH/9 - GcW);
-float popupX = random(GcH + 2*GcW, GscrW - GcW);
-float testing = random(1, 10);
 int frmc = frameCount;
+
 
 void setup() {
 fullScreen();
 background(0);
-
-
+exitImage = loadImage("IMG/BTN/Exit.png");
+aCoverBox = loadImage("IMG/BOX/albumcover.png");
+shop = loadImage("IMG/SPAM/shop.png");
+neutral = loadImage("IMG/SPAM/spamNeutral.png");
+dialogueBox = loadImage("IMG/BOX/DialogueBox.png");
+popup = loadImage("IMG/BOX/Popup.png");
+soul = loadImage("IMG/BTN/SOUL.png");
+songTitleBox = loadImage("IMG/BOX/box.png");
+FRIEND = loadImage("IMG/SPAM/IMAGE_FRIEND.png");
+pause = loadImage("IMG/BTN/pause_1.png");
+pause2 = loadImage("IMG/BTN/pause_2.png");
+PFont common;
+// scrH = displayHeight;
+//float scrW = displayWidth;
 }
 
+//global setup
+//float scrH = 0;
+//float scrW = 0;
+float scrH = displayHeight;
+float scrW = displayWidth;
+float cW = scrW/9;
+float cH = scrH/hr;
+float popupY = random(0, scrH - 4*scrH/9 - cW);
+float popupX = random(cH + 2*cW, scrW - cW);
 
+float testing = scrH;
+
+//song list
+float songlistDivY = -scrW/250;
+float songlistDivW = 2*cW;
+
+
+//spamton box
+float spamDivX = 20*scrW/39;
+float spamDivY = cH/2;
+float spamDivW = 2.3*cW;
+float spamDivH = 2.7*cW;
+
+//exit button 
+float exitDivX = 24*scrW/25;
+float exitDivWH = scrW/25;
+
+//dialogue box
+float dialogueDivX = cH + 1.9*cW;
+float dialogueDivY = 24*scrH/45;
+float dialogueDivW = scrW - (2*cH/3 + 2*cW);
+float dialogueDivH = 12*scrH/25;
+
+//options
+float optDivX = 4*scrW/5;
+float optDivY = 5*scrH/9;
+float optDivW = scrW/5;
 
 //cH = common height
 //cW = common width
@@ -34,37 +80,32 @@ background(0);
 //adding dialogue - framework complete
 //debug dialogue
 void draw() {
-  
-frmc = frameCount;  
 
+  println("old: ",scrH);
+scrH = displayHeight;
+scrW = displayWidth;
+frmc = frameCount;  
+println("new: ",scrH);  
+
+println(testing);
 
 //variable declaration
-int hr = 11;
+//int hr = 11;
 float scrH = displayHeight;
 float scrW = displayWidth;
 float cW = scrW/9;
 float cH = scrH/hr;
-PFont common;
 //home
 //common = createFont("common.ttf", 46);
 //school
-common = createFont("common.ttf", 32);
+common = createFont("DIA/common.ttf", 32);
 String[] dialogue;
-dialogue = loadStrings("Dialogue.txt");
+dialogue = loadStrings("DIA/Dialogue.txt");
+textFont(common);
 
 
 //image loading
-exitImage = loadImage("Exit.png");
-aCoverBox = loadImage("albumcover.png");
-shop = loadImage("shop.png");
-neutral = loadImage("spamNeutral.png");
-dialogueBox = loadImage("DialogueBox.png");
-popup = loadImage("Popup.png");
-soul = loadImage("SOUL.png");
-songTitleBox = loadImage("box.png");
-FRIEND = loadImage("IMAGE_FRIEND.png");
-pause = loadImage("BTN/pause_1.png");
-pause2 = loadImage("BTN/pause_2.png");
+
 
 
 
@@ -80,9 +121,7 @@ if(checker != 0) {
 
 
 
-//song list
-float songlistDivY = -scrW/250;
-float songlistDivW = 2*cW;
+
 
 
 //album and song stack
@@ -95,33 +134,20 @@ for(int z=1; z <= hr;z=z+1){
   songlistDivY=songlistDivY+100*cH/101;
 }
 
-//spamton box
-float spamDivX = 20*scrW/39;
-float spamDivY = cH/2;
-float spamDivW = 2.3*cW;
-float spamDivH = 2.7*cW;
+
 //rect(spamDivX, spamDivY, spamDivW, spamDivH); //old code for adding box placeholder
 
 image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
 
-//exit button 
-float exitDivX = 24*scrW/25;
-float exitDivWH = scrW/25;
+
 //rect(exitDivX, 0, exitDivWH, exitDivWH);
 image(exitImage, exitDivX, 0, exitDivWH, exitDivWH);
 
-//dialogue box
-float dialogueDivX = cH + 1.9*cW;
-float dialogueDivY = 24*scrH/45;
-float dialogueDivW = scrW - (2*cH/3 + 2*cW);
-float dialogueDivH = 12*scrH/25;
+
 //rect(dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
 image(dialogueBox, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
 
-//options
-float optDivX = 4*scrW/5;
-float optDivY = 5*scrH/9;
-float optDivW = scrW/5;
+
 
 //options stack
 //for(int j=1; j<=5; j=j+1) {
@@ -179,7 +205,6 @@ text(dialogue[xz].substring(0, charSpd*charDisplay), cH+11*cW/5, (1.5*(xz+1))+(1
 
 
 //menu labels
-textFont(common);
 text("I'M FEELING", 81*scrW/100, 5*scrH/9 + 3*cH/4);
 text("LUCKY", 81*scrW/100, 5*scrH/9 + 5*cH/4);
 text("SETTINGS", 81*scrW/100, 5*scrH/9 + 7*cH/4);
@@ -191,13 +216,12 @@ text("1997 KROMER", 39*scrW/50, 5*scrH/9 + 4.4*cH);
 //menu movement
 image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
 
-image(pause, scrW/2, scrH/2, 3*cW/2, 3*cW/2);
+//image(pause, scrW/2, scrH/2, 3*cW/2, 3*cW/2);
 
 //image(popup, popupX, popupY, cW, cW);
 //println(popupX," , ",popupY);
 
-textFont(common);
-  text(frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+1)*scrW/100, cH/2);
+text("frame: ",frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+1)*scrW/100, cH/2, cH/2);
 
 } //END OF DRAW FUNCTION
 
@@ -234,6 +258,6 @@ void keyPressed(){
   }
   else if(key == 'c'){
   popupY = popupY+100;
-  popupX = random(GcH + 2*GcW, GscrW - GcW);
+  popupX = random(cH + 2*cW, scrW - cW);
   }
 }
