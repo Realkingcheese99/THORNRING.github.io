@@ -13,6 +13,7 @@ int frmc;
 float scrH;
 float scrW;
 
+
 float cW;
 float cH;// = scrH/hr;
 //float popupY = random(0, scrH - 4*scrH/9 - cW);
@@ -28,6 +29,7 @@ int pfrmc;
 int pms;
 String frmrLbl;
 String frmrS;
+float rndfrmr;
 
 //song list
 float songlistDivY;// = -scrW/250;
@@ -129,7 +131,7 @@ println("frmr: ", frmr);
 //println("millis(): ", millis());
 //println(dt);
 //variable declaration
-common = createFont("DIA/common.ttf", 46);
+common = createFont("DIA/common.ttf", 32);
 dialogue = loadStrings("DIA/Dialogue.txt");
 textFont(common);
 
@@ -247,11 +249,10 @@ else {
 }
 
 //fps label
-frmrLbl = "fps: "+frmr;
-//text(frmrlbl,cH,cH);
+rndfrmr = round(frmr*10);
+frmrLbl = "fps: "+rndfrmr/10;
 text(frmrLbl, ((92-(2.7128/2)*floor((log(frmr)))/log(10.000))-10)*scrW/100, 3*cH/2);
 text("framecount: ",frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+11)*scrW/100, cH/2, cH/2);
-//println((92-(2.7128/2)*floor((log(frmc))/log(10))+11)*scrW/100);
 
 } //END OF DRAW FUNCTION
 
