@@ -30,6 +30,8 @@ if(i==1 | i==3) {
 
 
 //btn symbols
+noFill();
+//bezier(340, 80, 40, 40, 360, 360, 60, 320);
 
 //loop stack
 for(int i=0;i<3;i++) {
