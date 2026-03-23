@@ -2,6 +2,7 @@
 
 //DIA
 String[] dialogue;
+int line;
 //setup
 int charDisplay = 0;
 int xz = 0;
@@ -101,6 +102,16 @@ frmr = 0;
 prvScnd = 0;
 pfrmc = 0;
 pms = 0;
+line = 0;
+
+//init image loading
+for(int z=1; z <= hr;z=z+1){
+  //rect(0, albumDivY, cH, cH);
+  image(aCoverBox, 0, songlistDivY, 5*cH/4, 5*cH/4);
+  image(songTitleBox, 21*cH/20, songlistDivY, songlistDivW, 5*cH/4);
+  //songlistDivY=z*cH;
+  songlistDivY=songlistDivY+100*cH/101;
+}
 }
 //cH = common height
 //cW = common width
@@ -115,7 +126,7 @@ pms = 0;
 //adding dialogue - framework complete
 //debug dialogue
 void draw() {
-
+background(0);
   
   
 
@@ -170,7 +181,7 @@ if(checker != 0) {
 
 
 //album and song stack
-
+/*
 for(int z=1; z <= hr;z=z+1){
   //rect(0, albumDivY, cH, cH);
   image(aCoverBox, 0, songlistDivY, 5*cH/4, 5*cH/4);
@@ -178,7 +189,7 @@ for(int z=1; z <= hr;z=z+1){
   //songlistDivY=z*cH;
   songlistDivY=songlistDivY+100*cH/101;
 }
-
+*/
 
 //rect(spamDivX, spamDivY, spamDivW, spamDivH); //old code for adding box placeholder
 
@@ -219,6 +230,12 @@ if(str(dialogue[xz].charAt(charDisplay+1)).equals("-")) {
  if(charDisplay < dialogue[0].length()) { 
    charDisplay++;
  }
+ 
+/*for(int i = 0; i<charSpd; i--) {
+  if(dialogue[0].charAt(charSpd*charDisplay)-i == '-'){
+    line++;
+  }
+}*/
 
 if(charDisplay*charSpd >= dialogue[0].length()) {
    charDisplay = (dialogue[0].length())/charSpd;}
