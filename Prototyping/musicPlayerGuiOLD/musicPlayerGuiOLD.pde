@@ -1,4 +1,4 @@
-//NOTE: I KNOW THAT IT'S BROKEN, I'M TRYING TO OPTIMIZE IT, HOLD OFF UNTIL TOMORROW TO JUDGE
+
 
 //DIA
 String[] dialogue;
@@ -104,14 +104,6 @@ pfrmc = 0;
 pms = 0;
 line = 0;
 
-//init image loading
-for(int z=1; z <= hr;z=z+1){
-  //rect(0, albumDivY, cH, cH);
-  image(aCoverBox, 0, songlistDivY, 5*cH/4, 5*cH/4);
-  image(songTitleBox, 21*cH/20, songlistDivY, songlistDivW, 5*cH/4);
-  //songlistDivY=z*cH;
-  songlistDivY=songlistDivY+100*cH/101;
-}
 }
 //cH = common height
 //cW = common width
@@ -126,7 +118,7 @@ for(int z=1; z <= hr;z=z+1){
 //adding dialogue - framework complete
 //debug dialogue
 void draw() {
-background(0);
+
   
   
 
@@ -148,6 +140,13 @@ textFont(common);
 
 
 //image loading
+for(int z=1; z <= hr;z=z+1){
+  //rect(0, albumDivY, cH, cH);
+  image(aCoverBox, 0, songlistDivY, 5*cH/4, 5*cH/4);
+  image(songTitleBox, 21*cH/20, songlistDivY, songlistDivW, 5*cH/4);
+  //songlistDivY=z*cH;
+  songlistDivY=songlistDivY+100*cH/101;
+}
 
 text(frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+1)*scrW/100, cH/2);
 //float frmr = 1/(dt/1000);
@@ -230,12 +229,13 @@ if(str(dialogue[xz].charAt(charDisplay+1)).equals("-")) {
  if(charDisplay < dialogue[0].length()) { 
    charDisplay++;
  }
- 
-/*for(int i = 0; i<charSpd; i--) {
+/* 
+for(int i = 0; i<charSpd; i--) {
   if(dialogue[0].charAt(charSpd*charDisplay)-i == '-'){
     line++;
   }
-}*/
+}
+*/
 
 if(charDisplay*charSpd >= dialogue[0].length()) {
    charDisplay = (dialogue[0].length())/charSpd;}
