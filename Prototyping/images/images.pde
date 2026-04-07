@@ -1,6 +1,13 @@
 fullScreen();
-String back = "../../";
+String back = "../";
 String assets = "Assets/";
-String IMG = "IMG/";
-PImage keyArt = loadImage(back+assets+IMG+"key-art.gif");
-image(keyArt, 0, 0, 100, 100);
+String IMG = "z_prototyping/";
+String[] images = new String[2];
+images[0] = "deltarune"; images[1] = "silksong"; images[2] = "isaac";
+String Open = "/";
+String fileExtension = ".jpg";
+String IMG_PATH = back + back + assets + Open + IMG + Open;
+String[] pathway = new String[2];
+pathway[0] = IMG_PATH + images[0] + fileExtension;
+pathway[1] = IMG_PATH + images[1] + fileExtension;
+pathway[2] = IMG_PATH + images[2] + fileExtension;

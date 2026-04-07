@@ -290,7 +290,7 @@ void keyPressed(){
         menuY = 0;
       }
     }
-  } else if(key == 'z' || key == ENTER){
+  } else if(key == 'z' || key == ENTER || key == 'Z'){
     if(menuY==0){
       luck();
     } else if(menuY==1) {
