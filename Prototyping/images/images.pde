@@ -1,4 +1,5 @@
 //images are three of my favourite games of all time
+//division size and therefore image size is determined with the divW and divH parameters, feel free to change them as you wish
 fullScreen();
 int scrW = displayWidth;
 int scrH = displayHeight;
