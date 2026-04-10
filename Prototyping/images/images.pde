@@ -3,14 +3,15 @@
 fullScreen();
 int scrW = displayWidth;
 int scrH = displayHeight;
-int divW = scrW/5;
-int divH = divW;
+int divW = scrW/5; //0<divW<=scrW/3
+int divH = scrH/2; //0<divH<=scrH
 float[][] WH = new float[3][3];
 float[][] WH_adj = new float[3][2];
 String back = "../";
 String assets = "Assets/";
 String IMG = "z_prototyping/";
 String[] images = new String[3];
+float sf = 0.99; //scale factor, has to be <1, otherwise it hangs
 
 String fileExtension = ".jpg";
 images[0] = "deltarune"; images[1] = "silksong"; images[2] = "isaac";
@@ -23,7 +24,7 @@ PImage[] img = new PImage[3];
 println(divW + ", " + divH);
 for(int i = 0; i<3;i++) {
   img[i] = loadImage  (pathway[i]);
-  rect((divW)*(i+1), (scrH-divH)/2, divW, divH);
+  rect(((scrW-3*divW)/2)+(divW)*(i), (scrH-divH)/2, divW, divH);
   WH[i][0] = img[i].width;
   WH[i][1] = img[i].height;
   WH[i][2] = WH[i][0]/WH[i][1]; //aspect ratio for each image
@@ -34,17 +35,17 @@ for(int i = 0; i<3;i++) {
   if(WH[i][0] > divW || WH[i][1] > divH) {
     //reduction
     while(WH_adj[i][0] > divW || WH_adj[i][1] > divH) {
-      WH_adj[i][1] *= 0.99;
-      WH_adj[i][0] *= 0.99;
+      WH_adj[i][1] *= sf;
+      WH_adj[i][0] = WH_adj[i][1]*WH[i][2];
     }
     println(i + ": " + WH_adj[i][0] + ", " + WH_adj[i][1]);
   }
   else {
     //enlarging
     while(WH_adj[i][0] < divW && WH_adj[i][1] < divH) {
-      WH_adj[i][1] *= 1.01;
-      WH_adj[i][0] *= 1.01;
+      WH_adj[i][1] /= sf;
+      WH_adj[i][0] = WH_adj[i][1]*WH[i][2];
   }
 }
-image(img[i], ((divW)*(i+1))+(divW-WH_adj[i][0])/2, ((scrH-divH)+(divH-WH_adj[i][1]))/2, WH_adj[i][0], WH_adj[i][1]);
+image(img[i], ((scrW-3*divW)/2)+(divW)*(i)+(divW-WH_adj[i][0])/2, ((scrH-divH)+(divH-WH_adj[i][1]))/2, WH_adj[i][0], WH_adj[i][1]);
 }
