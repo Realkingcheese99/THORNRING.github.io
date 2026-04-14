@@ -258,7 +258,7 @@ text("1997 KROMER", 39*scrW/50, 5*scrH/9 + 4.4*cH);
 
 //menu movement  
 image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
-if(millis() > 0) {
+if(millis() < 1) {
 afrmr = frmc/((millis())/1000);
 }
 else {
