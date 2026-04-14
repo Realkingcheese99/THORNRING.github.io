@@ -59,19 +59,33 @@ for(int j=1; j<=5; j=j+1) {
 }
 
 //TEXT
+String text = "DELTARUNE TOMORROW";
+String[] titles = new String[11];
+titles[0] = "Field of Hopes and Dreams";
+titles[1] = "THE WORLD REVOLVING";
+titles[2] = "Chaos King";
+titles[3] = "A CYBER'S WORLD?";
 String[] DEVICE_FONTS = PFont.list();
 printArray(DEVICE_FONTS);
-float fontSize = 83;
+float fontSize;
 PFont font;
 String sitka = "Sitka Small";
 float songTitleH = cH;
-float stikaRatio = fontSize/songlistDivW;
-fontSize = songlistDivW*stikaRatio*0.7;
-font = createFont(sitka, fontSize);
-textFont(font);
+//float stikaRatio = fontSize/songlistDivW;
+//fontSize = songlistDivW*stikaRatio*0.7;
+font = createFont(sitka,cH);
+for(int i = 0; i<3; i++){
+  fontSize = cH;
+while(fontSize*text.length() > songlistDivW) {
+  fontSize *= 0.99;
+}
+textFont(font, fontSize);
+textSize(fontSize);
 color white = #FFFFFF;
 color yellow = #FFFF00;
 color normal = white;
 color black = #000000;
+println(fontSize);
 fill(black);
-text("DELTARUNE TOMORROW",0,scrH/2);
+text(titles[i],cH,(2*cH/3)+i*cH);
+}
