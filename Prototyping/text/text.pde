@@ -1,5 +1,5 @@
 fullScreen();
-
+textAlign(CENTER, BASELINE);
 println("Start of console");
 println("");
 
@@ -53,33 +53,54 @@ rect(exitDivX, 0, exitDivWH, exitDivWH);
 rect(dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
 
 //dialogue buttons and options stack
-for(int j=1; j<=5; j=j+1) {
+for(int j=1; j<=5; j++) {
  rect(optDivX, optDivY, optDivW, cH);
  optDivY = (5*scrH/9) + j*cH;
 }
 
 //TEXT
-String text = "DELTARUNE TOMORROW";
-String[] titles = new String[11];
-titles[0] = "Field of Hopes and Dreams";
-titles[1] = "THE WORLD REVOLVING";
-titles[2] = "Chaos King";
-titles[3] = "A CYBER'S WORLD?";
+String[] titles = new String[22];
+//band-aid fix: it was only correctly resizing on odd number indices, so I made every proper title an odd index.
+for(int i = 0; i<titles.length; i=i+2) {
+  titles[i] = "";
+}
+titles[1] = "Field of Hopes and Dreams";
+titles[3] = "THE WORLD REVOLVING";
+titles[5] = "Chaos King";
+titles[7] = "A CYBER'S WORLD?";
+titles[9] = "BIG SHOT";
+titles[11] = "Attack of the Killer Queen";
 String[] DEVICE_FONTS = PFont.list();
 printArray(DEVICE_FONTS);
 float fontSize;
 PFont font;
 String sitka = "Sitka Small";
-float songTitleH = cH;
+float songTitleH = cH/20;
 //float stikaRatio = fontSize/songlistDivW;
 //fontSize = songlistDivW*stikaRatio*0.7;
 font = createFont(sitka,cH);
-for(int i = 0; i<3; i++){
-  fontSize = cH;
-while(fontSize*text.length() > songlistDivW) {
-  fontSize *= 0.99;
+float decay = 0.99;
+int iWhile;
+for(int i = 0; i<12; i++){
+ // println(i);
+  iWhile = 0;
+  fontSize = scrH;
+  if(textWidth(titles[i]) > songlistDivW) {
+    println("test");
+while(textWidth(titles[i]) > songlistDivW) {
+  textFont(font, fontSize);
+  iWhile++;
+  println(i);
+  if(iWhile > 1000) {
+    println("timeoutException");
+    fontSize = (songlistDivW-1)/titles[i].length();
+  }
+  fontSize *= decay;
+ // println(iWhile + "; " + i + "; " + textWidth(titles[i]) + "; " + songlistDivW);
+  //println("while #1");
 }
-textFont(font, fontSize);
+  }
+//textFont(font, fontSize);
 textSize(fontSize);
 color white = #FFFFFF;
 color yellow = #FFFF00;
@@ -87,5 +108,5 @@ color normal = white;
 color black = #000000;
 println(fontSize);
 fill(black);
-text(titles[i],cH,(2*cH/3)+i*cH);
+text(titles[i],cH,(2*cH/3)+((i-1)*cH/2)-cH/2,songlistDivW,cH);
 }
