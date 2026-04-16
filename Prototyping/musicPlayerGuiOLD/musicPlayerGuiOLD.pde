@@ -3,6 +3,11 @@
 //DIA
 String[] dialogue;
 int line;
+//TXT
+String[][] titles;
+float fontSize;
+float decay;
+int iWhile;
 //setup
 int charDisplay = 0;
 int xz = 0;
@@ -104,6 +109,40 @@ pfrmc = 0;
 pms = 0;
 line = 0;
 
+//TXT
+//textAlign(CENTER, BASELINE);
+titles = new String[22][2];
+for(int i = 0; i<titles.length; i=i+2) {
+  titles[i][0] = "";
+}
+titles[1][0] = "Field of Hopes and Dreams";
+titles[3][0] = "THE WORLD REVOLVING";
+titles[5][0] = "Chaos King";
+titles[7][0] = "A CYBER'S WORLD?";
+titles[9][0] = "BIG SHOT";
+titles[11][0] = "Attack of the Killer Queen";
+decay = 0.99;
+for(int i = 0; i<12; i++){
+ // println(i);
+  iWhile = 0;
+  fontSize = scrH;
+  if(textWidth(titles[i][0]) > songlistDivW) {
+    println("test");
+while(textWidth(titles[i][0]) > songlistDivW) {
+  textFont(common, fontSize);
+  iWhile++;
+  println(i);
+  if(iWhile > 1000) {
+    println("timeoutException");
+    fontSize = (songlistDivW-1)/titles[i][0].length();
+  }
+  fontSize *= decay;
+ // println(iWhile + "; " + i + "; " + textWidth(titles[i]) + "; " + songlistDivW);
+  //println("while #1");
+}
+  }
+  titles[i][1] = str(fontSize);
+}
 }
 //cH = common height
 //cW = common width
@@ -117,10 +156,14 @@ line = 0;
 //adding songs
 //adding dialogue - framework complete
 //debug dialogue
+
+
 void draw() {
 
   
-  
+  println(int(titles[1][1]));
+  println(titles[1][1]);
+  println(songlistDivW);
 
 frmc = frameCount;
 //dt = millis()-dt;

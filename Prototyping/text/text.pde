@@ -75,7 +75,7 @@ printArray(DEVICE_FONTS);
 float fontSize;
 PFont font;
 String sitka = "Sitka Small";
-float songTitleH = cH/20;
+float songTitleH = cH;
 //float stikaRatio = fontSize/songlistDivW;
 //fontSize = songlistDivW*stikaRatio*0.7;
 font = createFont(sitka,cH);
@@ -87,7 +87,7 @@ for(int i = 0; i<12; i++){
   fontSize = scrH;
   if(textWidth(titles[i]) > songlistDivW) {
     println("test");
-while(textWidth(titles[i]) > songlistDivW) {
+/*while(textWidth(titles[i]) > songlistDivW) {
   textFont(font, fontSize);
   iWhile++;
   println(i);
@@ -100,6 +100,7 @@ while(textWidth(titles[i]) > songlistDivW) {
   //println("while #1");
 }
   }
+  */
 //textFont(font, fontSize);
 textSize(fontSize);
 color white = #FFFFFF;
