@@ -161,9 +161,9 @@ while(textWidth(titles[i][0]) > songlistDivW) {
 void draw() {
 
   
-  println(int(titles[1][1]));
-  println(titles[1][1]);
-  println(songlistDivW);
+ // println(int(titles[1][1]));
+ // println(titles[1][1]);
+ // println(songlistDivW);
 
 frmc = frameCount;
 //dt = millis()-dt;
@@ -189,6 +189,9 @@ for(int z=1; z <= hr;z=z+1){
   image(songTitleBox, 21*cH/20, songlistDivY, songlistDivW, 5*cH/4);
   //songlistDivY=z*cH;
   songlistDivY=songlistDivY+100*cH/101;
+  fill(#00FFFF);
+  textSize(float(titles[z][1]));
+  text(titles[z][0],cH,(2*cH/3)+((z-1)*cH/2)-cH/2,songlistDivW,cH);
 }
 
 text(frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+1)*scrW/100, cH/2);
@@ -205,11 +208,12 @@ if(scnd != prvScnd) {
   prvScnd = scnd;
 }
 
-
+/*
 if(checker != 0) {
   println("test");
   image(FRIEND, (scrW-checker)/2, (scrH-checker)/2, 536, 497);
 }
+*/
   
 
 //shop background
