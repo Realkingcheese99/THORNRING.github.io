@@ -25,4 +25,5 @@ if (mus_count > snd_count) {
 current[0] = mus_count - mus_count;
 
 //display
-fullScreen();
+size(500,500);
+//fullScreen();
