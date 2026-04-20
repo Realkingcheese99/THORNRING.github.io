@@ -4,7 +4,7 @@
 String[] dialogue;
 int line;
 //TXT
-String[][] titles;
+String[] titles;
 float fontSize;
 float decay;
 int iWhile;
@@ -68,17 +68,17 @@ fullScreen();
 background(0);
 
 //IMG
-exitImage = loadImage("IMG/BTN/Exit.png");
-aCoverBox = loadImage("IMG/BOX/albumcover.png");
-shop = loadImage("IMG/SPAM/shop.png");
-neutral = loadImage("IMG/SPAM/spamNeutral.png");
-dialogueBox = loadImage("IMG/BOX/DialogueBox.png");
-popup = loadImage("IMG/BOX/Popup.png");
-soul = loadImage("IMG/BTN/SOUL.png");
-songTitleBox = loadImage("IMG/BOX/box.png");
-FRIEND = loadImage("IMG/SPAM/IMAGE_FRIEND.png");
-pause = loadImage("IMG/BTN/pause_1.png");
-pause2 = loadImage("IMG/BTN/pause_2.png");
+exitImage = loadImage("../../Assets/IMG/BTN/Exit.png");
+aCoverBox = loadImage("../../Assets/IMG/BOX/albumcover.png");
+shop = loadImage("../../Assets/IMG/SPAM/shop.png");
+neutral = loadImage("../../Assets/IMG/SPAM/spamNeutral.png");
+dialogueBox = loadImage("../../Assets/IMG/BOX/DialogueBox.png");
+popup = loadImage("../../Assets/IMG/BOX/Popup.png");
+soul = loadImage("../../Assets/IMG/BTN/SOUL.png");
+songTitleBox = loadImage("../../Assets/IMG/BOX/box.png");
+FRIEND = loadImage("../../Assets/IMG/SPAM/IMAGE_FRIEND.png");
+pause = loadImage("../../Assets/IMG/BTN/pause_1.png");
+pause2 = loadImage("../../Assets/IMG/BTN/pause_2.png");
 
 
 
@@ -110,19 +110,35 @@ pms = 0;
 line = 0;
 
 //TXT
-//textAlign(CENTER, BASELINE);
-titles = new String[22][2];
+textAlign(LEFT, BASELINE);
+titles = new String[22];
 for(int i = 0; i<titles.length; i=i+2) {
-  titles[i][0] = "";
+  titles[i] = "";
 }
-titles[1][0] = "Field of Hopes and Dreams";
-titles[3][0] = "THE WORLD REVOLVING";
-titles[5][0] = "Chaos King";
-titles[7][0] = "A CYBER'S WORLD?";
-titles[9][0] = "BIG SHOT";
-titles[11][0] = "Attack of the Killer Queen";
-decay = 0.99;
-for(int i = 0; i<12; i++){
+dialogue = loadStrings("../../Assets/DIA/Dialogue.txt");
+titles[1] = "Field of Hopes and Dreams";
+titles[3] = "THE WORLD REVOLVING";
+titles[5] = "Chaos King";
+titles[7] = "A CYBER'S WORLD?";
+titles[9] = "BIG SHOT";
+titles[11] = "Attack of the Killer Queen";
+decay = 0.9;
+common = createFont("../../Assets/DIA/common.ttf", 32);
+iWhile = 0;
+fontSize = scrH;
+textFont(common, fontSize);
+while(textWidth(dialogue[0]) > 3*(dialogueDivW)/4) {
+  textFont(common, fontSize);
+  fontSize *= decay;
+  iWhile++;
+  if(iWhile > 1000) {
+    println("TimeoutException");
+  }
+  println(fontSize);
+}
+
+// OLD CODE FOR SIZING THE SONG TITLE TEXT
+/*for(int i = 0; i<12; i++){
  // println(i);
   iWhile = 0;
   fontSize = scrH;
@@ -131,7 +147,7 @@ for(int i = 0; i<12; i++){
 while(textWidth(titles[i][0]) > songlistDivW) {
   textFont(common, fontSize);
   iWhile++;
-  println(i);
+  //println(i);
   if(iWhile > 1000) {
     println("timeoutException");
     fontSize = (songlistDivW-1)/titles[i][0].length();
@@ -142,7 +158,11 @@ while(textWidth(titles[i][0]) > songlistDivW) {
 }
   }
   titles[i][1] = str(fontSize);
+  println("fnt: " +fontSize);
 }
+*/
+
+
 }
 //cH = common height
 //cW = common width
@@ -173,13 +193,13 @@ if(millis() != 0) {
 }
 //println("millis: ", millis());
 frmr = 1/(dt/1000);
-println("frmr: ", frmr);
+//println("frmr: ", frmr);
 //println("millis(): ", millis());
 //println(dt);
 //variable declaration
-common = createFont("DIA/common.ttf", 32);
-dialogue = loadStrings("DIA/Dialogue.txt");
-textFont(common);
+//common = createFont("DIA/common.ttf", 32);
+//dialogue = loadStrings("DIA/Dialogue.txt");
+textFont(common, fontSize/2);
 
 
 //image loading
@@ -189,9 +209,11 @@ for(int z=1; z <= hr;z=z+1){
   image(songTitleBox, 21*cH/20, songlistDivY, songlistDivW, 5*cH/4);
   //songlistDivY=z*cH;
   songlistDivY=songlistDivY+100*cH/101;
-  fill(#00FFFF);
-  textSize(float(titles[z][1]));
-  text(titles[z][0],cH,(2*cH/3)+((z-1)*cH/2)-cH/2,songlistDivW,cH);
+  //fill(#00FFFF);
+  //textSize(float(titles[z][1]));
+  //textSize(30);
+ // println(float(titles[z][1]));
+  text(titles[z],6*cH/5,(2*cH/3)+((z-1)*cH/2)-cH/2,decay*songlistDivW,cH);
 }
 
 text(frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+1)*scrW/100, cH/2);
@@ -262,7 +284,7 @@ image(dialogueBox, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
 
 
 //DIALOGUE
-
+textFont(common, fontSize);
 int charSpd = 2;
 
 //println(dialogue[xz].charAt(charDisplay+1));
@@ -270,7 +292,7 @@ if(xz < dialogue.length-1) {
 if(str(dialogue[xz].charAt(charDisplay+1)).equals("-")) {
   xz++;
   charDisplay = 0;
-  println(xz);
+  //println(xz);
 }
 
  if(charDisplay < dialogue[0].length()) { 
@@ -293,7 +315,7 @@ text(dialogue[xz].substring(0, charSpd*charDisplay), cH+11*cW/5, (1.5*(xz+1))+(1
 
 
 
-
+textFont(common, 3*fontSize/4);
 //menu labels
 text("I'M FEELING", 81*scrW/100, 5*scrH/9 + 3*cH/4);
 text("LUCKY", 81*scrW/100, 5*scrH/9 + 5*cH/4);
