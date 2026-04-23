@@ -121,12 +121,12 @@ for(int i = 0; i<titles.length; i=i+2) {
   titles[i] = "";
 }
 dialogue = loadStrings("../../Assets/DIA/Dialogue.txt");
-titles[1] = "Field of Hopes and Dreams";
-titles[3] = "THE WORLD REVOLVING";
-titles[5] = "Chaos King";
-titles[7] = "A CYBER'S WORLD?";
-titles[9] = "BIG SHOT";
-titles[11] = "Attack of the Killer Queen";
+titles[1] = "CHAPTER 1";
+titles[3] = "Field of Hopes and Dreams";
+titles[5] = "THE WORLD REVOLVING";
+titles[7] = "Chaos King";
+titles[9] = "Don't Forget";
+  titles[11] = "CHAPTER 2";
 decay = 0.9;
 common = createFont("../../Assets/DIA/common.ttf", 32);
 iWhile = 0;
@@ -218,7 +218,7 @@ for(int z=1; z <= hr;z=z+1){
   //textSize(float(titles[z][1]));
   //textSize(30);
  // println(float(titles[z][1]));
-  text(titles[z],6*cH/5,(2*cH/3)+((z-1)*cH/2)-cH/2,decay*songlistDivW,cH);
+  text(titles[z],6*cH/5,(2*cH/3)+((z-2)*cH/2),decay*songlistDivW,cH);
 }
 
 text(frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+1)*scrW/100, cH/2);
