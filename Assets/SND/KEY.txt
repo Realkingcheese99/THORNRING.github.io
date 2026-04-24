@@ -1,0 +1,13 @@
+0: alert
+1: explosion
+2: ding
+3: powerup/boost
+4: break1
+5: break2
+6: damage
+7: run
+8: menu move
+9: select
+10: smile
+11: splat
+12: text
