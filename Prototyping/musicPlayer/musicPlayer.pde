@@ -181,7 +181,7 @@ void setup() {
     if (iWhile > 1000) {
       println("TimeoutException");
     }
-    println(fontSize);
+    //println(fontSize);
   }
   charDisplay = new int[4];
   charDisplay[0] = 0;
@@ -279,9 +279,14 @@ void draw() {
   int charSpd = 1;
 
   //println(dialogue[xz].charAt(charDisplay+1));
-  if (xz < dialogue.length-1 && dialogue[0].length()>=charDisplay[0]+2) {
-    if (str(dialogue[xz].charAt(charDisplay[0]+1)).equals("-")) {
+  if (xz < dialogue.length-1 ) {
+    for(int i = 0; i<4; i++) {
+    if(charDisplay[i]+1<dialogue[i].length()){    
+    if (str(dialogue[xz+i].charAt(charDisplay[i]+1)).equals("-")) {
       furthestLine++;
+      charDisplay[i]--;
+    }
+    }  
     }
 
     if (charDisplay[0] < dialogue[0].length()-1) {
@@ -292,12 +297,27 @@ void draw() {
     if (charDisplay[0]*charSpd >= dialogue[0].length()) {
      // charDisplay[0] = (dialogue[0].length())/charSpd;
     }
-    text(dialogue[xz].substring(0, charSpd*charDisplay[0]), cH+11*cW/5, (11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH); //line 1
-    if(furthestLine > 0){
-      charDisplay[1]++;
-    text(dialogue[xz+1].substring(0, charSpd*charDisplay[1]), cH+11*cW/5, (75)+(11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH); //line 2
+    if( dialogue[0].length()<=charDisplay[0]+2){
+      charDisplay[0] = dialogue[0].length()-1;
+    }
+    for(int i = 0; i<4; i++){
+       println(charDisplay[i] + "; " + i);
+    text(dialogue[xz+i].substring(0, charSpd*charDisplay[i]), cH+11*cW/5, 60*i+(11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH); //line 1
+    if(furthestLine-1 > i){
+     charDisplay[i]++;
+    
+    
     }
   }
+  }
+  
+  /*
+      text(dialogue[xz].substring(0, charSpd*charDisplay[0]), cH+11*cW/5, (11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH); //line 1
+    if(furthestLine > 0){
+     charDisplay[1]++;
+    text(dialogue[xz+1].substring(0, charSpd*charDisplay[1]), cH+11*cW/5, (75)+(11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH); //line 2
+    }
+  */
 
 
 
