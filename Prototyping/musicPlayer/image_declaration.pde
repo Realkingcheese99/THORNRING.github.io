@@ -9,6 +9,7 @@ PImage songTitleBox;
 PImage FRIEND;
 PImage pauseButton;
 PImage pause2;
+PImage talk;
 
 //int hr = 11;
 //float scrH = displayHeight;

@@ -1,3 +1,5 @@
+//do next: labeling dialogue options
+
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import ddf.minim.effects.*;
@@ -10,6 +12,7 @@ Minim minim;
 //OPTIMIZATION
 float prevScroll;
 float prevMus;
+int prevXz;
 
 //MUS
 boolean pause;
@@ -30,6 +33,14 @@ float scrollSpd;
 String[] dialogue;
 int line;
 int furthestLine;
+boolean talkbox;
+int dialogueLocation;
+int soulLocation;
+boolean sidebar;
+int buttonCount;
+int k;
+int menuType;
+int opt;
 //TXT
 
 float fontSize;
@@ -37,7 +48,7 @@ float decay;
 int iWhile;
 //setup
 int[] charDisplay;
-int xz = 0;
+int xz = 1;
 int hr = 11;
 //float scrH = displayHeight;
 //float scrW = displayWidth;
@@ -97,7 +108,7 @@ void setup() {
 
   //MUS
   mus_count = 20;
-  snd_count = 13;
+  snd_count = 15;
   MUS = new AudioPlayer[mus_count];
   SND = new AudioPlayer[snd_count];
   MUS_DATA = new AudioMetaData[mus_count];
@@ -129,6 +140,7 @@ void setup() {
   popup = loadImage("../../Assets/IMG/BOX/Popup.png");
   soul = loadImage("../../Assets/IMG/BTN/SOUL.png");
   songTitleBox = loadImage("../../Assets/IMG/BOX/box.png");
+  talk = loadImage("../../Assets/IMG/BOX/talk.png");
   FRIEND = loadImage("../../Assets/IMG/SPAM/IMAGE_FRIEND.png");
   pauseButton = loadImage("../../Assets/IMG/BTN/pause_1.png");
   pause2 = loadImage("../../Assets/IMG/BTN/pause_2.png");
@@ -142,7 +154,7 @@ void setup() {
   cH = scrH/hr;
   songlistDivY = -scrW/250;
   songlistDivW = 2*cW;
-  spamDivX = 20*scrW/39;
+  spamDivX = 19*scrW/39;
   spamDivY = cH/2;
   spamDivW = 2.3*cW;
   spamDivH = 2.7*cW;
@@ -165,6 +177,11 @@ void setup() {
   ratio = 1;
   prevScroll = 1;
   prevMus = 0;
+  prevXz = 0;
+  talkbox = false;
+  soulLocation = 0;
+  sidebar = true;
+  buttonCount = 4;
 
   //TXT
   textAlign(LEFT, BASELINE);
@@ -178,15 +195,19 @@ void setup() {
     textFont(common, fontSize);
     fontSize *= decay;
     iWhile++;
+    // println(fontSize);
     if (iWhile > 1000) {
       println("TimeoutException");
     }
-    //println(fontSize);
+    //println(textWidth(dialogue[0]) + "; " + 3*(dialogueDivW)/4);
   }
+  fontSize = fontSize*=pow(decay, 8);
   charDisplay = new int[4];
   charDisplay[0] = 0;
   charDisplay[1] = 0;
   furthestLine = 0;
+  //fontSize /= 2;
+  k = 48;
 }
 //cH = common height
 //cW = common width
@@ -197,8 +218,9 @@ void setup() {
 //mouse interaction - partially done
 //spritework - partially done
 //keyboard interaction - partially done
-//adding dialogue - framework complete
-//debug dialogue
+//adding dialogue - need to flesh out
+//custom keybinds (maybe)
+
 
 
 void draw() {
@@ -211,8 +233,17 @@ void draw() {
     pms = millis();
   }
   frmr = 1/(dt/1000);
-
   textFont(common, fontSize/2);
+
+  menuType = int(dialogue[xz-1].charAt(0))-k;
+  if (menuType % 2 == 0) {
+    soulLocation = 1;
+    dialogueLocation = 1;
+    opt = menuType/2;
+  } else {
+    dialogueLocation = 0;
+    soulLocation = (-1*menuType)+1;
+  }
 
   if (current != prevMus ||scroll != prevScroll) {
     //image loading
@@ -230,8 +261,13 @@ void draw() {
       fill(#FFFFFF);
     }
   }
-  prevMus = current;
-  prevScroll = scroll;
+
+  if (prevXz != xz) {
+    for (int i = 0; i<4; i++) {
+      charDisplay[i] = 0;
+    }
+    furthestLine = 0;
+  }
 
   //text(frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+1)*scrW/100, cH/2);
   //float frmr = 1/(dt/1000);
@@ -267,9 +303,11 @@ void draw() {
 
 
   //rect(dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
-  image(dialogueBox, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
-
-
+  if (menuType != 3) {
+    image(dialogueBox, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
+  } else {
+    image(talk, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
+  }
 
 
 
@@ -279,61 +317,55 @@ void draw() {
   int charSpd = 1;
 
   //println(dialogue[xz].charAt(charDisplay+1));
-  if (xz < dialogue.length-1 ) {
-    for(int i = 0; i<4; i++) {
-    if(charDisplay[i]+1<dialogue[i].length()){    
-    if (str(dialogue[xz+i].charAt(charDisplay[i]+1)).equals("-")) {
-      furthestLine++;
-      charDisplay[i]--;
-    }
-    }  
-    }
-
-    if (charDisplay[0] < dialogue[0].length()-1) {
-      charDisplay[0]++;
-    }
-
-
-    if (charDisplay[0]*charSpd >= dialogue[0].length()) {
-     // charDisplay[0] = (dialogue[0].length())/charSpd;
-    }
-    if( dialogue[0].length()<=charDisplay[0]+2){
-      charDisplay[0] = dialogue[0].length()-1;
-    }
-    for(int i = 0; i<4; i++){
-       println(charDisplay[i] + "; " + i);
-    text(dialogue[xz+i].substring(0, charSpd*charDisplay[i]), cH+11*cW/5, 60*i+(11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH); //line 1
-    if(furthestLine-1 > i){
-     charDisplay[i]++;
-    
-    
+  if (xz < dialogue.length-3 ) {
+    for (int i = 0; i<4; i++) {
+      if (charDisplay[i]+2<dialogue[i+xz].length()) {
+        if (str(dialogue[xz+furthestLine].charAt(charDisplay[furthestLine]+1)).equals("+")) {
+          furthestLine++;
+          charDisplay[i]--;
+        } else {
+          if (furthestLine+1 > i) {
+            charDisplay[i]++;
+          }
+        }
+      }
+      if (charDisplay[i] < 0) {
+        charDisplay[i] = 0;
+      } else {
+        if (charDisplay[i] > dialogue[i+xz].length()) {
+          charDisplay[i] = dialogue[i+xz].length() -1;
+        }
+      }
+      // println(furthestLine + "; " + charDisplay[i] + "; " + i); //form of furthestLine; charDisplay[i];
+      if (dialogueLocation == 0) {
+        text(dialogue[xz+i].substring(0, charSpd*charDisplay[i]), cH+11*cW/5, dialogueDivH/6*i+(11*scrH/18), dialogueDivW, dialogueDivH);
+      } else if (dialogueLocation == 1) {
+        text(dialogue[xz+i].substring(0, charSpd*charDisplay[i]), cH+11*cW/5+dialogueDivW-5*optDivW/4, dialogueDivH/6*i+(11*scrH/18), dialogueDivW, dialogueDivH);
+      }
     }
   }
+
+
+
+  if (menuType == 1) {
+    //menu labels
+    textFont(common, 3*fontSize/4);
+    text("I'M FEELING", 81*scrW/100, 5*scrH/9 + 3*cH/4);
+    text("LUCKY", 81*scrW/100, 5*scrH/9 + 5*cH/4);
+    text("SETTINGS", 81*scrW/100, 5*scrH/9 + 7*cH/4);
+    text("TALKING", 81*scrW/100, 5*scrH/9 + 11*cH/4);
+    text("ESCAPE", 81*scrW/100, 5*scrH/9 + 15*cH/4);
+    text("1997 KROMER", 39*scrW/50, 5*scrH/9 + 4.4*cH);
   }
-  
-  /*
-      text(dialogue[xz].substring(0, charSpd*charDisplay[0]), cH+11*cW/5, (11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH); //line 1
-    if(furthestLine > 0){
-     charDisplay[1]++;
-    text(dialogue[xz+1].substring(0, charSpd*charDisplay[1]), cH+11*cW/5, (75)+(11*scrH/18), dialogueDivW-3*optDivW/2, dialogueDivH); //line 2
-    }
-  */
+
+  if (soulLocation == 0) {
+    image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
+  } else if (soulLocation == 1) {
+    image(soul, (cH+songlistDivW)*1.1, 53*scrH/90 + menuY*cH*4/5, cW/5, cW/5);
+  }
 
 
 
-
-  textFont(common, 3*fontSize/4);
-  //menu labels
-  text("I'M FEELING", 81*scrW/100, 5*scrH/9 + 3*cH/4);
-  text("LUCKY", 81*scrW/100, 5*scrH/9 + 5*cH/4);
-  text("SETTINGS", 81*scrW/100, 5*scrH/9 + 7*cH/4);
-  text("TALKING", 81*scrW/100, 5*scrH/9 + 11*cH/4);
-  text("ESCAPE", 81*scrW/100, 5*scrH/9 + 15*cH/4);
-  text("1997 KROMER", 39*scrW/50, 5*scrH/9 + 4.4*cH);
-
-
-  //menu movement
-  image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
   if (millis() < 1) {
     afrmr = frmc/((millis())/1000);
   } else {
@@ -345,6 +377,10 @@ void draw() {
   frmrLbl = "fps: "+rndfrmr/10;
   text(frmrLbl, ((92-(2.7128/2)*floor((log(frmr)))/log(10.000))-10)*scrW/100, 3*cH/2);
   text("framecount: ", frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+11)*scrW/100, cH/2, cH/2);
+
+  prevMus = current;
+  prevScroll = scroll;
+  prevXz = xz;
 } //END OF DRAW FUNCTION
 
 
@@ -354,16 +390,20 @@ int menuY = 0;
 void keyPressed() {
   if (key == CODED) {
     if (keyCode == UP) {
-      SND[8].play(0);
-      menuY = menuY - 1;
-      if (menuY < 0) {
-        menuY = 3;
+      if (talkbox == false) {
+        SND[8].play(0);
+        menuY = menuY - 1;
+        if (menuY < 0) {
+          menuY = buttonCount-1;
+        }
       }
     } else if (keyCode == DOWN) {
-      SND[8].play(0);
-      menuY++;
-      if (menuY > 3) {
-        menuY = 0;
+      if (talkbox == false) {
+        SND[8].play(0);
+        menuY++;
+        if (menuY > buttonCount-1) {
+          menuY = 0;
+        }
       }
     }
     if (keyCode == RIGHT) {
@@ -389,15 +429,19 @@ void keyPressed() {
       }
     }
   } else if (key == 'z' || key == ENTER || key == 'Z') {
-    SND[9].play(0);
-    if (menuY==0) {
-      luck();
-    } else if (menuY==1) {
-      options();
-    } else if (menuY==2) {
-      advanceDialogue();
-    } else if (menuY==3) {
-      escape();
+    if (menuType % 3 != 0) {
+      SND[9].play(0);
+      if (menuY==0) {
+        luck();
+      } else if (menuY==1) {
+        options();
+      } else if (menuY==2) {
+        advanceDialogue();
+      } else if (menuY==3) {
+        escape();
+      }
+    } else if (charDisplay[furthestLine] == dialogue[furthestLine+xz].length() -2) {
+      xz = xz +5;
     }
   } else if (key == 'c') {
     //popupY = popupY+100;
@@ -409,6 +453,14 @@ void keyPressed() {
     } else {
       pause = true;
       MUS[current].pause();
+    }
+  } else if (key == '+') {
+    xz = xz + 5;
+  } else if (key == 'x' || keyCode == SHIFT) {
+    if (menuType % 2 == 0) {
+      //back
+    } else {
+      charDisplay[furthestLine] = dialogue[furthestLine+xz].length() -3;
     }
   }
 }

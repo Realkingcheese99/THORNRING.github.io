@@ -11,3 +11,5 @@
 10: smile
 11: splat
 12: text
+13: spamton text high
+14: spamton text low

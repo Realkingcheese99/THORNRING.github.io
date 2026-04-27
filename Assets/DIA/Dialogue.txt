@@ -1,4 +1,35 @@
-* HEY EVERY            ! - 
-* IT'S ME, SPAMTON G. - 
-  -
-  SPAMTON! -
+1 //intro  +
+* HEY EVERY            !  + 
+* IT'S ME, SPAMTON G.  +
+  +
+  SPAMTON! +
+2 //talk options right
+LET'S MAKE  +
+A DEAL.  +
+  +
+  +
+3 // ourDeal1  +
+* KRIS!!! YOU [Little Sponge]! I  +
+  KNEW YOU'D COME HERE [[On A  +
+  Saturday Night]]!  +
+  +
+3 // ourDeal2  +
+* AFTER ALL, YOU WANNA BE A [Big  +
+  Shot]! EAHAHAHAHAA!!  +
+  +
+  +
+3 // ourDeal3
+* BUT HOW? HOW CAN YOU BE?  +
+  +
+  +
+  +
+3 // ourDeal4
+* LISTEN. IN THE [Deep Abyss] OF  +
+  QUEEN'S [Mansion]  +
+  +
+  +
+3 // ourDeal5
+* [[A Great Deal]] IS WAITING For  +
+  [[A LimiTed Time Only!]]  +
+* A HEAVEN-PIERCING  +
+  [[Workout-Ready Body]]  +

@@ -10,7 +10,9 @@ void options(){
 
 //Talking
 void advanceDialogue(){
-  
+  xz = 6;
+  //talkbox = true;
+  buttonCount = 5;
 }
 
 int checker = 0;
