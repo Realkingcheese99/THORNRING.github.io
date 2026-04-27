@@ -191,7 +191,7 @@ void setup() {
   iWhile = 0;
   fontSize = scrH;
   textFont(common, fontSize);
-  while (textWidth(dialogue[0]) > 3*(dialogueDivW)/4) {
+  while (textWidth(dialogue[1]) > 3*(dialogueDivW)/4) {
     textFont(common, fontSize);
     fontSize *= decay;
     iWhile++;
@@ -201,8 +201,8 @@ void setup() {
     }
     //println(textWidth(dialogue[0]) + "; " + 3*(dialogueDivW)/4);
   }
-  fontSize = fontSize*=pow(decay, 8);
-  charDisplay = new int[4];
+ // fontSize = fontSize*=pow(decay, 8);
+  charDisplay = new int[6];
   charDisplay[0] = 0;
   charDisplay[1] = 0;
   furthestLine = 0;
@@ -263,7 +263,7 @@ void draw() {
   }
 
   if (prevXz != xz) {
-    for (int i = 0; i<4; i++) {
+    for (int i = 0; i<6; i++) {
       charDisplay[i] = 0;
     }
     furthestLine = 0;
@@ -318,8 +318,9 @@ void draw() {
 
   //println(dialogue[xz].charAt(charDisplay+1));
   if (xz < dialogue.length-3 ) {
-    for (int i = 0; i<4; i++) {
+    for (int i = 0; i<int(dialogue[xz-1].charAt(2))-k; i++) {
       if (charDisplay[i]+2<dialogue[i+xz].length()) {
+        
         if (str(dialogue[xz+furthestLine].charAt(charDisplay[furthestLine]+1)).equals("+")) {
           furthestLine++;
           charDisplay[i]--;
