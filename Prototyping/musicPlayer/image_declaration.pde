@@ -10,10 +10,7 @@ PImage FRIEND;
 PImage pauseButton;
 PImage pause2;
 PImage talk;
-PImage chapter1;
-PImage chapter2;
-PImage chapter3;
-PImage chapter4;
+PImage[] labels;
 
 //int hr = 11;
 //float scrH = displayHeight;
