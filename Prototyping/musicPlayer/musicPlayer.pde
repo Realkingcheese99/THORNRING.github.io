@@ -144,10 +144,15 @@ void setup() {
   FRIEND = loadImage("../../Assets/IMG/SPAM/IMAGE_FRIEND.png");
   pauseButton = loadImage("../../Assets/IMG/BTN/pause_1.png");
   pause2 = loadImage("../../Assets/IMG/BTN/pause_2.png");
-  chapter1 = loadImage("../../Assets/IMG/BOX/chapter1.png");
+  labels[] = new PImage[5];
+for(int i = 1; i<6; i++){
+labels[i] = loadImage("../../Assets/IMG/BOX/label_"+i+".png");
+}
+ /* chapter1 = loadImage("../../Assets/IMG/BOX/chapter1.png");
   chapter2 = loadImage("../../Assets/IMG/BOX/chapter2.png");
   chapter3 = loadImage("../../Assets/IMG/BOX/chapter3.png");
   chapter4 = loadImage("../../Assets/IMG/BOX/chapter4.png");
+*/
 
 
 
@@ -250,17 +255,17 @@ void draw() {
   }
 
   if (current != prevMus ||scroll != prevScroll) {
+int offset = 0;
     //image loading
     for (int z=0; z < 5*mus_count/4; z++) {
       //rect(0, albumDivY, cH, cH);
       if(z % 4 != 0) {
-      image(aCoverBox, -cH/20, scroll+cH*z*ratio, 5*cH/4, 5*cH/4);
-      image(songTitleBox, 21*cH/20, scroll+cH*z*ratio, songlistDivW, 5*cH/4);
+      image(aCoverBox, -cH/20, scroll+cH*(z+offset)*ratio, 5*cH/4, 5*cH/4);
+      image(songTitleBox, 21*cH/20, scroll+cH*(z+offset)*ratio, songlistDivW, 5*cH/4);
       } else {
-        if(z/4>3) {
-        image(chapter1,-cH/20, scroll+cH*z*ratio, songlistDivW + 5*cH/4, 5*cH/4);
-      }
+        image(labels[z/4],-cH/20, scroll+cH*(z+offset)*ratio, songlistDivW + 5*cH/4, 5*cH/4);
       z--;
+offset++;
       }
 
       if (z==current && pause == false) {
