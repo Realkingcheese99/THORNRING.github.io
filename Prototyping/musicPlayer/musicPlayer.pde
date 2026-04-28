@@ -1,9 +1,4 @@
-/*do next: 
-- labeling dialogue options
-- label chapters
-- optimize dialogue
-*/
-
+//do next: labeling dialogue options
 
 import ddf.minim.*;
 import ddf.minim.analysis.*;
@@ -34,6 +29,7 @@ String file;
 float scroll;
 float scrollSpd;
 
+
 //DIA
 String[] dialogue;
 int line;
@@ -46,6 +42,7 @@ int buttonCount;
 int k;
 int menuType;
 int opt;
+int menuY = 0;
 //TXT
 
 float fontSize;
@@ -84,6 +81,7 @@ float rndfrmr;
 float songlistDivY;// = -scrW/250;
 float songlistDivW;// = 2*cW;
 float ratio;
+int offset;
 
 
 //spamton box
@@ -149,15 +147,12 @@ void setup() {
   FRIEND = loadImage("../../Assets/IMG/SPAM/IMAGE_FRIEND.png");
   pauseButton = loadImage("../../Assets/IMG/BTN/pause_1.png");
   pause2 = loadImage("../../Assets/IMG/BTN/pause_2.png");
-  labels[] = new PImage[5];
-for(int i = 1; i<6; i++){
-labels[i] = loadImage("../../Assets/IMG/BOX/label_"+i+".png");
-}
- /* chapter1 = loadImage("../../Assets/IMG/BOX/chapter1.png");
-  chapter2 = loadImage("../../Assets/IMG/BOX/chapter2.png");
-  chapter3 = loadImage("../../Assets/IMG/BOX/chapter3.png");
-  chapter4 = loadImage("../../Assets/IMG/BOX/chapter4.png");
-*/
+  labels = new PImage[5];
+  for (int i = 1; i<6; i++) {
+    String file = "../../Assets/IMG/BOX/label_"+str(i)+".png";
+    println(file);
+    labels[i-1] = loadImage(file);
+  }
 
 
 
@@ -196,6 +191,8 @@ labels[i] = loadImage("../../Assets/IMG/BOX/label_"+i+".png");
   soulLocation = 0;
   sidebar = true;
   buttonCount = 4;
+  offset = 0;
+
 
   //TXT
   textAlign(LEFT, BASELINE);
@@ -215,7 +212,7 @@ labels[i] = loadImage("../../Assets/IMG/BOX/label_"+i+".png");
     }
     //println(textWidth(dialogue[0]) + "; " + 3*(dialogueDivW)/4);
   }
- // fontSize = fontSize*=pow(decay, 8);
+  // fontSize = fontSize*=pow(decay, 8);
   charDisplay = new int[6];
   charDisplay[0] = 0;
   charDisplay[1] = 0;
@@ -260,25 +257,39 @@ void draw() {
   }
 
   if (current != prevMus ||scroll != prevScroll) {
-int offset = 0;
+
     //image loading
     for (int z=0; z < 5*mus_count/4; z++) {
+      offset = floor(z+offset/4)+1;
       //rect(0, albumDivY, cH, cH);
-      if(z % 4 != 0) {
-      image(aCoverBox, -cH/20, scroll+cH*(z+offset)*ratio, 5*cH/4, 5*cH/4);
-      image(songTitleBox, 21*cH/20, scroll+cH*(z+offset)*ratio, songlistDivW, 5*cH/4);
-      } else {
-        image(labels[z/4],-cH/20, scroll+cH*(z+offset)*ratio, songlistDivW + 5*cH/4, 5*cH/4);
-      z--;
-offset++;
+      if (z-offset % 4 != 0 ) {
+        image(aCoverBox, -cH/20, scroll+cH*z*ratio, 5*cH/4, 5*cH/4);
+        image(songTitleBox, 21*cH/20, scroll+cH*z*ratio, songlistDivW, 5*cH/4);
+        println(z-offset);
+        if(z-offset < mus_count) {
+          text(MUS_DATA[z-offset].title(), 6*cH/5, scroll+((2*cH/3)+((z-offset)*cH*ratio))-cH/2, decay*songlistDivW, cH);
+          println(scroll+((2*cH/3)+((z-offset)*cH*ratio))-cH/2);
+        }
+        
+        if (z==current && pause == false) {
+          fill(#FFFF00);
+        } else {
+          fill(#FFFFFF);
+        }
+      } else if((z-offset)/4 <= 4) {
+        println(z-offset);
+        image(labels[floor(z+offset/4)], 0, scroll+cH*z*ratio*5, (songlistDivW+cH), cH/decay);
+        
       }
-
-      if (z==current && pause == false) {
-        fill(#FFFF00);
-      } else {
-        fill(#FFFFFF);
-      }
-      text(MUS_DATA[z].title(), 6*cH/5, scroll+((2*cH/3)+((z)*cH*ratio))-cH/2, decay*songlistDivW, cH);
+      
+      /*
+        if (z==current && pause == false) {
+       fill(#FFFF00);
+       } else {
+       fill(#FFFFFF);
+       }
+       */
+      // text(MUS_DATA[z].title(), 6*cH/5, scroll+((2*cH/3)+((z)*cH*ratio))-cH/2, decay*songlistDivW, cH);
       fill(#FFFFFF);
     }
   }
@@ -341,7 +352,7 @@ offset++;
   if (xz < dialogue.length-3 ) {
     for (int i = 0; i<int(dialogue[xz-1].charAt(2))-k; i++) {
       if (charDisplay[i]+2<dialogue[i+xz].length()) {
-        
+
         if (str(dialogue[xz+furthestLine].charAt(charDisplay[furthestLine]+1)).equals("+")) {
           furthestLine++;
           charDisplay[i]--;
@@ -407,7 +418,6 @@ offset++;
 
 
 //menu movement keyboard control
-int menuY = 0;
 
 void keyPressed() {
   if (key == CODED) {
