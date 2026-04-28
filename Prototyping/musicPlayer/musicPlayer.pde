@@ -1,4 +1,9 @@
-//do next: labeling dialogue options
+/*do next: 
+- labeling dialogue options
+- label chapters
+- optimize dialogue
+*/
+
 
 import ddf.minim.*;
 import ddf.minim.analysis.*;
