@@ -150,7 +150,7 @@ void setup() {
   labels = new PImage[5];
   for (int i = 1; i<6; i++) {
     String file = "../../Assets/IMG/BOX/label_"+str(i)+".png";
-    println(file);
+  // println(file);
     labels[i-1] = loadImage(file);
   }
 
@@ -256,31 +256,34 @@ void draw() {
     soulLocation = (-1*menuType)+1;
   }
 
-  if (current != prevMus ||scroll != prevScroll) {
-
+   if (current != prevMus ||scroll != prevScroll) {
     //image loading
-    for (int z=0; z < 5*mus_count/4; z++) {
-      offset = floor(z+offset/4)+1;
+    offset = 0;
+    for (int z=0; z < floor(5*mus_count/4); z=z+1) {
       //rect(0, albumDivY, cH, cH);
-      if (z-offset % 4 != 0 ) {
-        image(aCoverBox, -cH/20, scroll+cH*z*ratio, 5*cH/4, 5*cH/4);
-        image(songTitleBox, 21*cH/20, scroll+cH*z*ratio, songlistDivW, 5*cH/4);
-        println(z-offset);
-        if(z-offset < mus_count) {
-          text(MUS_DATA[z-offset].title(), 6*cH/5, scroll+((2*cH/3)+((z-offset)*cH*ratio))-cH/2, decay*songlistDivW, cH);
-          println(scroll+((2*cH/3)+((z-offset)*cH*ratio))-cH/2);
-        }
-        
-        if (z==current && pause == false) {
-          fill(#FFFF00);
-        } else {
-          fill(#FFFFFF);
-        }
-      } else if((z-offset)/4 <= 4) {
-        println(z-offset);
-        image(labels[floor(z+offset/4)], 0, scroll+cH*z*ratio*5, (songlistDivW+cH), cH/decay);
-        
+      if(z % 5 != 0) {
+      image(aCoverBox, -cH/20, scroll+cH*z*ratio, 5*cH/4, 5*cH/4);
+      image(songTitleBox, 21*cH/20, scroll+cH*z*ratio, songlistDivW, 5*cH/4);
+
+      if (z-offset==current && pause == false) {
+        fill(#FFFF00);
+      } else {
+        fill(#FFFFFF);
       }
+      text(MUS_DATA[z-offset].title(), 6*cH/5, scroll+((2*cH/3)+((z)*cH*ratio))-cH/2, decay*songlistDivW, cH);
+      } else if(floor((z-offset)/4) < 5){
+        println(floor((z-offset)/4));
+        println(labels[floor((z-offset)/4)]);
+       image(labels[floor((z-offset)/4)], -cH/20, scroll+cH*z*ratio, (songlistDivW+cH)*1.02, cH*1.2);
+       offset++;
+      }
+      fill(#FFFFFF);
+    }
+  }
+        //image(labels[floor(z-offset/4)], 0, scroll+cH*z*ratio*5, (songlistDivW+cH), cH/decay);
+        
+      
+    
       
       /*
         if (z==current && pause == false) {
@@ -291,8 +294,7 @@ void draw() {
        */
       // text(MUS_DATA[z].title(), 6*cH/5, scroll+((2*cH/3)+((z)*cH*ratio))-cH/2, decay*songlistDivW, cH);
       fill(#FFFFFF);
-    }
-  }
+    
 
   if (prevXz != xz) {
     for (int i = 0; i<6; i++) {
@@ -502,7 +504,7 @@ void keyPressed() {
 
 void mouseWheel(MouseEvent event) {
   float dir = event.getCount();
-  if (abs(dir) == dir && abs(scroll) < (cH*(mus_count-hr))-scrollSpd) {
+  if (abs(dir) == dir && abs(scroll) < (cH*(5*mus_count/4-hr))-scrollSpd) {
     scroll = scroll-scrollSpd;
   } else if (-1*abs(dir) == dir && abs(scroll) > scrollSpd) {
     scroll = scroll + scrollSpd;

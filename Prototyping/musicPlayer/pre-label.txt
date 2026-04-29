@@ -1,0 +1,16 @@
+ if (current != prevMus ||scroll != prevScroll) {
+    //image loading
+    for (int z=0; z < mus_count; z=z+1) {
+      //rect(0, albumDivY, cH, cH);
+      image(aCoverBox, -cH/20, scroll+cH*z*ratio, 5*cH/4, 5*cH/4);
+      image(songTitleBox, 21*cH/20, scroll+cH*z*ratio, songlistDivW, 5*cH/4);
+
+      if (z==current && pause == false) {
+        fill(#FFFF00);
+      } else {
+        fill(#FFFFFF);
+      }
+      text(MUS_DATA[z].title(), 6*cH/5, scroll+((2*cH/3)+((z)*cH*ratio))-cH/2, decay*songlistDivW, cH);
+      fill(#FFFFFF);
+    }
+  }
