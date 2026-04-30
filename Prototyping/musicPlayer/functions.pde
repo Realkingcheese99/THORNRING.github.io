@@ -1,35 +1,59 @@
+// - menuType = 1
 //I'm feeling lucky
-void luck(){
-  text("TESTING", scrW/2, scrH/2);
+void menu0() {
+  if (menuType == 1) {
+    text("TESTING", scrW/2, scrH/2);
+  } else {
+    xz = 9;
+  }
 }
 
 //Settings
-void options(){
-  
+void menu1() {
+  if (menuType == 1) {
+  } else {
+    xz = 68;
+  }
 }
 
 //Talking
-void advanceDialogue(){
-  xz = 6;
-  //talkbox = true;
-  buttonCount = 5;
+void menu2() {
+  if (menuType == 1) {
+    xz = 6;
+    //talkbox = true;
+    buttonCount = 5;
+  } else {
+    if (knight == false) {
+      xz = 96;
+    } else {
+    }
+  }
 }
 
 int checker = 0;
 int z;
 
 //Escape
-void escape(){
-  //if(random(1,10) == 10) {
-   //for(z=0; z<=scrH/10; z++){
-     //checker = z;
+void menu3() {
+  if (menuType == 1) {
+
+    //if(random(1,10) == 10) {
+    //for(z=0; z<=scrH/10; z++){
+    //checker = z;
     //image(FRIEND, (scrW-z)/2, (scrH-z)/2, 536, 497);
     exit();
-//}
+    //}
+  }}
+
+  void menu4() {
+    if (menuType==1) {
+    } else {
+      xz = 131;
+    }
   }
-//}
 
 
-void popup(){
-  
-}
+  void popup() {
+  }
+
+  //menuType = 2

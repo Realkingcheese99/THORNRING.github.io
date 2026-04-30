@@ -43,6 +43,7 @@ int k;
 int menuType;
 int opt;
 int menuY = 0;
+boolean knight;
 //TXT
 
 float fontSize;
@@ -192,6 +193,7 @@ void setup() {
   sidebar = true;
   buttonCount = 4;
   offset = 0;
+  knight = false;
 
 
   //TXT
@@ -213,7 +215,7 @@ void setup() {
     //println(textWidth(dialogue[0]) + "; " + 3*(dialogueDivW)/4);
   }
   // fontSize = fontSize*=pow(decay, 8);
-  charDisplay = new int[6];
+  charDisplay = new int[10];
   charDisplay[0] = 0;
   charDisplay[1] = 0;
   furthestLine = 0;
@@ -272,8 +274,6 @@ void draw() {
       }
       text(MUS_DATA[z-offset].title(), 6*cH/5, scroll+((2*cH/3)+((z)*cH*ratio))-cH/2, decay*songlistDivW, cH);
       } else if(floor((z-offset)/4) < 5){
-        println(floor((z-offset)/4));
-        println(labels[floor((z-offset)/4)]);
        image(labels[floor((z-offset)/4)], -cH/20, scroll+cH*z*ratio, (songlistDivW+cH)*1.02, cH*1.2);
        offset++;
       }
@@ -391,12 +391,19 @@ void draw() {
     text("TALKING", 81*scrW/100, 5*scrH/9 + 11*cH/4);
     text("ESCAPE", 81*scrW/100, 5*scrH/9 + 15*cH/4);
     text("1997 KROMER", 39*scrW/50, 5*scrH/9 + 4.4*cH);
+  } else if(menuType == 2) {
+    textFont(common, fontSize);
+    text("OUR DEAL", (cH+songlistDivW)*1.2, 53*scrH/90 +cH*2/5);
+    text("ABOUT YOU", (cH+songlistDivW)*1.2,53*scrH/90 + cH*9/10 +cH*2/5);
+    text("KNIGHT", (cH+songlistDivW)*1.2, 53*scrH/90 + 2*cH*9/10 +cH*2/5);
+    text("FEAR", (cH+songlistDivW)*1.2, 53*scrH/90 + 3*cH*9/10 +cH*2/5);
+    text("EXIT AND BUY MORE!!", (cH+songlistDivW)*1.2, 53*scrH/90 + 4*cH*9/10 +cH*2/5);
   }
 
   if (soulLocation == 0) {
     image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
   } else if (soulLocation == 1) {
-    image(soul, (cH+songlistDivW)*1.1, 53*scrH/90 + menuY*cH*4/5, cW/5, cW/5);
+    image(soul, (cH+songlistDivW)*1.1, 53*scrH/90 + menuY*cH*9/10, cW/5, cW/5);
   }
 
 
@@ -466,16 +473,18 @@ void keyPressed() {
     if (menuType % 3 != 0) {
       SND[9].play(0);
       if (menuY==0) {
-        luck();
+        menu0();
       } else if (menuY==1) {
-        options();
+       menu1();
       } else if (menuY==2) {
-        advanceDialogue();
+        menu2();
       } else if (menuY==3) {
-        escape();
+        menu3();
+      } else if (menuY==4) {
+        menu4();
       }
     } else if (charDisplay[furthestLine] == dialogue[furthestLine+xz].length() -2) {
-      xz = xz +5;
+      xz = xz + int(dialogue[xz-1].charAt(2))-k+1;
     }
   } else if (key == 'c') {
     //popupY = popupY+100;
