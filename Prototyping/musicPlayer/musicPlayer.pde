@@ -524,6 +524,7 @@ void keyPressed() {
         SND[16].play(0);
         menuY = 0;
         xz = 1;
+        buttonCount = 4;
       }
     } else {
       charDisplay[furthestLine] = dialogue[furthestLine+xz].length() -3;
