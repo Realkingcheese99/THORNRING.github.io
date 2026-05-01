@@ -20,12 +20,14 @@ void menu1() {
 void menu2() {
   if (menuType == 1) {
     xz = 6;
-    //talkbox = true;
     buttonCount = 5;
+    menuY = 0;
   } else {
     if (knight == false) {
       xz = 96;
+      knight = true;
     } else {
+      xz = 108;
     }
   }
 }
@@ -43,12 +45,17 @@ void menu3() {
     //image(FRIEND, (scrW-z)/2, (scrH-z)/2, 536, 497);
     exit();
     //}
-  }}
+  } else {
+    xz = 131;
+  }
+}
 
   void menu4() {
     if (menuType==1) {
     } else {
-      xz = 131;
+      xz = 1;
+      buttonCount = 4;
+      menuY = 0;
     }
   }
 

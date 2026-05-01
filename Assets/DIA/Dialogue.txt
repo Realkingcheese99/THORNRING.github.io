@@ -61,7 +61,7 @@ A DEAL.  +
 * TAKE THIS DEAL AND YOU WILL  +
   [[Die]]!!  +
 * IT'S THAT GOOD!!!  +
-3 3 // ourDeal16
+3 3 1 // ourDeal16
 * [BUY] THE KEYGEN FROM ME,  +
   UNLOCK THE BASEMENT, AND GET  +
   THAT EmptyDisk!!!  +
@@ -91,7 +91,7 @@ A DEAL.  +
 * I'LL GET SO  +
 * I'LL GET SO  +
 * I'LL GET SO  +
-3 1 // aboutYou7
+3 1 1 // aboutYou7
 * [[Hyperlink Blocked.]]  +
 3 1 // knight1
 * SPEAKING OF [[Communion]]  +
@@ -101,7 +101,7 @@ A DEAL.  +
 3 2 // knight3
 * No, I'm sorry! I'm sorry! I  +
   didn't mean to --  +
-3 3 // knight4
+3 3 1 // knight4
 * TOO MANY EXCESS VACATION DAYS??  +
   TAKE A GOD DAMN VACATION  +
   STRAIGHT TO HELL  +
@@ -123,7 +123,7 @@ A DEAL.  +
 3 2 // friends 6
 * ...  +
 * ... Mike...  +
-3 4 // friends 7
+3 4 1 // friends 7
 * KRIS!! DON'T BELIEVE  +
   [[Anything You See On TV!]]  +
 * THE MAN'S A CRIMINAL, I TELL  +
@@ -141,6 +141,10 @@ A DEAL.  +
 3 2 // fear 5
 * HUH??? WHAT?? NO, I DIDN'T HEAR  +
   ANYTHING JUST NOW!!!  +
-3 2 // fear 6
+3 2 1 // fear 6
 * ... BUT IT SOUNDED LIKE THEY  +
   WERE TALKING TO YOU.  +
+
+
+
+

@@ -1,6 +1,5 @@
 ~~ main:
 
-- differentiate dialogue
 - create menu for music controls
 
 ~~ side:
