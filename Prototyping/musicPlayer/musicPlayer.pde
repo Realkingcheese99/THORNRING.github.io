@@ -8,10 +8,17 @@ import ddf.minim.ugens.*;
 
 Minim minim;
 
+//popup
+boolean popupstatus;
+float popupX;
+float popupY;
+
 //OPTIMIZATION
 float prevScroll;
 float prevMus;
 int prevXz;
+float prevpopupX;
+float prevpopupY;
 
 //MUS
 boolean pause;
@@ -111,7 +118,7 @@ void setup() {
 
   //MUS
   mus_count = 20;
-  snd_count = 15;
+  snd_count = 17;
   MUS = new AudioPlayer[mus_count];
   SND = new AudioPlayer[snd_count];
   MUS_DATA = new AudioMetaData[mus_count];
@@ -140,7 +147,7 @@ void setup() {
   shop = loadImage("../../Assets/IMG/SPAM/shop.png");
   neutral = loadImage("../../Assets/IMG/SPAM/spamNeutral.png");
   dialogueBox = loadImage("../../Assets/IMG/BOX/DialogueBox.png");
-  popup = loadImage("../../Assets/IMG/BOX/Popup.png");
+  popup = loadImage("../../Assets/IMG/BOX/popup.png");
   soul = loadImage("../../Assets/IMG/BTN/SOUL.png");
   songTitleBox = loadImage("../../Assets/IMG/BOX/box.png");
   talk = loadImage("../../Assets/IMG/BOX/talk.png");
@@ -193,6 +200,7 @@ void setup() {
   buttonCount = 4;
   offset = 0;
   knight = false;
+  popupstatus = false;
 
 
   //TXT
@@ -282,8 +290,6 @@ void draw() {
   //image(labels[floor(z-offset/4)], 0, scroll+cH*z*ratio*5, (songlistDivW+cH), cH/decay);
 
 
-
-
   /*
         if (z==current && pause == false) {
    fill(#FFFF00);
@@ -342,8 +348,11 @@ void draw() {
     image(talk, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
   }
 
-
-
+  if (popupstatus == true ) {  //&& popupX != prevpopupX || popupY != prevpopupY
+    image(popup, popupX, popupY, scrW/5, scrW/5);
+  }
+  prevpopupX = popupX;
+  prevpopupY = popupY;
 
   //DIALOGUE
   textFont(common, fontSize);
@@ -384,8 +393,8 @@ void draw() {
   if (menuType == 1) {
     //menu labels
     textFont(common, 3*fontSize/4);
-    text("I'M FEELING", 81*scrW/100, 5*scrH/9 + 3*cH/4);
-    text("LUCKY", 81*scrW/100, 5*scrH/9 + 5*cH/4);
+    text("CLICK HERE !", 81*scrW/100, 5*scrH/9 + 3*cH/4);
+    // text("LUCKY", 81*scrW/100, 5*scrH/9 + 5*cH/4);
     text("SETTINGS", 81*scrW/100, 5*scrH/9 + 7*cH/4);
     text("TALKING", 81*scrW/100, 5*scrH/9 + 11*cH/4);
     text("ESCAPE", 81*scrW/100, 5*scrH/9 + 15*cH/4);
@@ -512,6 +521,8 @@ void keyPressed() {
   } else if (key == 'x' || keyCode == SHIFT) {
     if (menuType % 2 == 0) {
       if (menuType == 2) {
+        SND[16].play(0);
+        menuY = 0;
         xz = 1;
       }
     } else {

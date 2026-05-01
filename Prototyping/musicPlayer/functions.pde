@@ -2,8 +2,13 @@
 //I'm feeling lucky
 void menu0() {
   if (menuType == 1) {
-    text("TESTING", scrW/2, scrH/2);
-  } else {
+    //text("hot singles in your area", scrW/2, scrH/2);
+    popupstatus = true;
+    popupX = cH+songlistDivW + random(scrW-cH-songlistDivW-scrW/5);
+    popupY = random(scrH-dialogueDivH-scrW/5);
+    println(popupX);
+    println(popupY);
+  } else { 
     xz = 9;
   }
 }

@@ -13,3 +13,5 @@
 12: text
 13: spamton text high
 14: spamton text low
+15: can't select
+16: menu back
