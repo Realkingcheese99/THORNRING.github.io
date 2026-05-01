@@ -8,6 +8,9 @@ import ddf.minim.ugens.*;
 
 Minim minim;
 
+//mus control
+int shuffle;
+
 //popup
 boolean popupstatus;
 float popupX;
@@ -34,6 +37,7 @@ String extension;
 String file;
 float scroll;
 float scrollSpd;
+int prevSong;
 
 
 //DIA
@@ -201,6 +205,7 @@ void setup() {
   offset = 0;
   knight = false;
   popupstatus = false;
+  shuffle = 0;
 
 
   //TXT
@@ -427,6 +432,7 @@ void draw() {
   }
 
   //fps label
+   textFont(common, 2*fontSize/3);
   rndfrmr = round(frmr*10);
   frmrLbl = "fps: "+rndfrmr/10;
   text(frmrLbl, ((92-(2.7128/2)*floor((log(frmr)))/log(10.000))-10)*scrW/100, 3*cH/2);
@@ -435,8 +441,8 @@ void draw() {
   prevMus = current;
   prevScroll = scroll;
   prevXz = xz;
+  prevSong = current;
 } //END OF DRAW FUNCTION
-
 
 //menu movement keyboard control
 
@@ -465,11 +471,16 @@ void keyPressed() {
       if (pause == true) {
         pause = false;
       }
+      if(shuffle == 0) {
       if (current<mus_count-1) {
         current++;
         MUS[current].loop();
       } else {
         current=0;
+        MUS[current].loop();
+      }
+      } else {
+        current = round(random(mus_count-1));
         MUS[current].loop();
       }
     }
@@ -533,6 +544,8 @@ void keyPressed() {
     MUS[current].setGain(MUS[current].getGain() - 1);
   } else if (key == 'l') {
     MUS[current].setGain(MUS[current].getGain() + 1);
+  } else if (key == 's') {
+   shuffle = abs(shuffle-1);
   }
 }
 
