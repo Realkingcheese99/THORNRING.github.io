@@ -10,8 +10,6 @@ void menu0() {
     } else {
       refresh();
     }
-    println(popupX);
-    println(popupY);
   } else { 
     xz = 9;
   }

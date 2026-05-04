@@ -186,7 +186,6 @@ void setup() {
   labels = new PImage[5];
   for (int i = 1; i<6; i++) {
     String file = "../Assets/IMG/BOX/label_"+str(i)+".png";
-    // println(file);
     labels[i-1] = loadImage(file);
   }
   button = new PImage[5][3][2];
@@ -356,7 +355,7 @@ void draw() {
   //float frmr = 1/(dt/1000);
   float afrmr = frmc/((millis()+1/1000));
   //text(frmr, (92-(2.7128/2)*floor((log(frmr))/log(10))+1)*scrW/100, cH);
-  //println(dt);
+
 
 
   int scnd = second();
@@ -416,7 +415,7 @@ void draw() {
   textFont(common, fontSize);
   int charSpd = 1;
 
-  //println(dialogue[xz].charAt(charDisplay+1));
+
   if (xz < dialogue.length-3 ) {
     for (int i = 0; i<int(dialogue[xz-1].charAt(2))-k; i++) {
       if (charDisplay[i]+2<dialogue[i+xz].length()) {
@@ -437,7 +436,6 @@ void draw() {
           charDisplay[i] = dialogue[i+xz].length() -1;
         }
       }
-      // println(furthestLine + "; " + charDisplay[i] + "; " + i); //form of furthestLine; charDisplay[i];
       if (dialogueLocation == 0) {
         text(dialogue[xz+i].substring(0, charSpd*charDisplay[i]), cH+11*cW/5, dialogueDivH/6*i+(11*scrH/18), dialogueDivW, dialogueDivH);
       } else if (dialogueLocation == 1) {
@@ -488,7 +486,7 @@ void draw() {
   textFont(common, 2*fontSize/3);
   rndfrmr = round(frmr*10);
   frmrLbl = "fps: "+rndfrmr/10;
-  text(frmrLbl, ((92-(2.7128/2)*floor((log(frmr)))/log(10.000))-10)*scrW/100, 9*scrH/10);// y = 3*cH/2
+  text(frmrLbl, ((72-(2.7128/2)*floor((log(frmr)))/log(10.000))-10)*scrW/100, 9*scrH/10);// y = 3*cH/2
   //text("framecount: ", frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+11)*scrW/100, cH/2, cH/2);
 
   prevMus = current;
@@ -628,7 +626,7 @@ void mouseWheel(MouseEvent event) {
 }
 
 void mouseDragged() {
-  if (popupX<=mouseX && mouseX<=popupX+scrW/5 && popupY <= mouseY && mouseY<= popupY+scrW/5 && popupstatus == 1) {
+  if (popupX<=mouseX && mouseX<=popupX+scrW/5 && popupY <= mouseY && mouseY<= popupY+scrW/25 && popupstatus == 1) {
     popupX = mouseX-scrW/10;
     popupY = mouseY-cW/5;
   }
