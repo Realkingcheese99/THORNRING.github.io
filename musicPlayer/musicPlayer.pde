@@ -1,4 +1,24 @@
-//IMPORTANT: INSTALL THE LIBRARY "minim' OR IT WILL NOT WORK
+/*
+Music App, Final Project
+Make sure to install the minim library on your computer for this program to work
+
+CREDITS:
+Most sprites from Deltarune by Toby Fox
+Music from Deltarune by Toby Fox
+Sprites are ripped from spriters-resource.com
+Chapter label sprites by me
+Button sprites by Damien
+
+to-do list:
+- mouse interaction - partially done
+- spritework - partially done
+- keyboard interaction - partially done
+- adding dialogue - need to flesh out
+- custom keybinds if I have time
+- finish popup
+*/
+
+//minim
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 import ddf.minim.effects.*;
@@ -7,6 +27,8 @@ import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
 Minim minim;
+
+// --global var
 
 //mus control
 int shuffle;
@@ -68,12 +90,9 @@ boolean knight;
 float fontSize;
 float decay;
 int iWhile;
-//setup
 int[] charDisplay;
 int xz = 1;
 int hr = 11;
-//float scrH = displayHeight;
-//float scrW = displayWidth;
 PFont common;
 int frmc;
 float scrH;
@@ -81,11 +100,8 @@ float scrW;
 
 
 float cW;
-float cH;// = scrH/hr;
-//float popupY = random(0, scrH - 4*scrH/9 - cW);
-//float popupX = random(cH + 2*cW, scrW - cW);
+float cH;
 
-//float testing = scrH;
 
 //FRAMERATE
 float dt;
@@ -155,21 +171,21 @@ void setup() {
   scrollSpd = 30;
 
   //IMG
-  exitImage = loadImage("../../Assets/IMG/BTN/Exit.png");
-  aCoverBox = loadImage("../../Assets/IMG/BOX/albumcover.png");
-  shop = loadImage("../../Assets/IMG/SPAM/shop.png");
-  neutral = loadImage("../../Assets/IMG/SPAM/spamNeutral.png");
-  dialogueBox = loadImage("../../Assets/IMG/BOX/DialogueBox.png");
-  popup = loadImage("../../Assets/IMG/BOX/popup.png");
-  soul = loadImage("../../Assets/IMG/BTN/SOUL.png");
-  songTitleBox = loadImage("../../Assets/IMG/BOX/box.png");
-  talk = loadImage("../../Assets/IMG/BOX/talk.png");
-  FRIEND = loadImage("../../Assets/IMG/SPAM/IMAGE_FRIEND.png");
-  pauseButton = loadImage("../../Assets/IMG/BTN/pause_1.png");
-  pause2 = loadImage("../../Assets/IMG/BTN/pause_2.png");
+  exitImage = loadImage("../Assets/IMG/BTN/Exit.png");
+  aCoverBox = loadImage("../Assets/IMG/BOX/albumcover.png");
+  shop = loadImage("../Assets/IMG/SPAM/shop.png");
+  neutral = loadImage("../Assets/IMG/SPAM/spamNeutral.png");
+  dialogueBox = loadImage("../Assets/IMG/BOX/DialogueBox.png");
+  popup = loadImage("../Assets/IMG/BOX/popup.png");
+  soul = loadImage("../Assets/IMG/BTN/SOUL.png");
+  songTitleBox = loadImage("../Assets/IMG/BOX/box.png");
+  talk = loadImage("../Assets/IMG/BOX/talk.png");
+  FRIEND = loadImage("../Assets/IMG/SPAM/IMAGE_FRIEND.png");
+  pauseButton = loadImage("../Assets/IMG/BTN/pause_1.png");
+  pause2 = loadImage("../Assets/IMG/BTN/pause_2.png");
   labels = new PImage[5];
   for (int i = 1; i<6; i++) {
-    String file = "../../Assets/IMG/BOX/label_"+str(i)+".png";
+    String file = "../Assets/IMG/BOX/label_"+str(i)+".png";
     // println(file);
     labels[i-1] = loadImage(file);
   }
@@ -177,10 +193,10 @@ void setup() {
   for (int x = 0; x < 5; x++) {
     for (int y = 0; y < 3; y++) {
       for (int z = 0; z < 2; z++) {
-        String file = "../../Assets/IMG/BTN/" + x + "_" + y + "_" + z + ".png";
+        String file = "../Assets/IMG/BTN/" + x + "_" + y + "_" + z + ".png";
         button[x][y][z] = loadImage(file);
         if(button[x][y][z] == null) {
-          button[x][y][z] = loadImage("../../Assets/IMG/SPAM/error.png");
+          button[x][y][z] = loadImage("../Assets/IMG/SPAM/error.png");
         }
       }
     }
@@ -245,38 +261,27 @@ void setup() {
     textFont(common, fontSize);
     fontSize *= decay;
     iWhile++;
-    // println(fontSize);
     if (iWhile > 1000) {
       println("TimeoutException");
     }
-    //println(textWidth(dialogue[0]) + "; " + 3*(dialogueDivW)/4);
   }
-  // fontSize = fontSize*=pow(decay, 8);
   charDisplay = new int[10];
   charDisplay[0] = 0;
   charDisplay[1] = 0;
   furthestLine = 0;
-  //fontSize /= 2;
   k = 48;
   image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
   image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
 }
-//cH = common height
-//cW = common width
-//scrH = screen height
-//scrW = screen width
 
-//to-do list:
-//mouse interaction - partially done
-//spritework - partially done
-//keyboard interaction - partially done
-//adding dialogue - need to flesh out
-//custom keybinds (maybe)
+
+
 
 
 
 void draw() {
   //refresh();
+ 
   if (popupX<cH+songlistDivW) {
     popupX=cH+songlistDivW;
   }
@@ -623,7 +628,7 @@ void mouseWheel(MouseEvent event) {
 }
 
 void mouseDragged() {
-  if (popupX<=mouseX && mouseX<=popupX+scrW/5 && popupY <= mouseY && mouseY<= popupY+scrW/5) {
+  if (popupX<=mouseX && mouseX<=popupX+scrW/5 && popupY <= mouseY && mouseY<= popupY+scrW/5 && popupstatus == 1) {
     popupX = mouseX-scrW/10;
     popupY = mouseY-cW/5;
   }
