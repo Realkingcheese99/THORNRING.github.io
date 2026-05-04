@@ -3,9 +3,13 @@
 void menu0() {
   if (menuType == 1) {
     //text("hot singles in your area", scrW/2, scrH/2);
-    popupstatus = true;
+    popupstatus = abs(popupstatus-1);
+    if(popupstatus == 1) {
     popupX = cH+songlistDivW + random(scrW-cH-songlistDivW-scrW/5);
     popupY = random(scrH-dialogueDivH-scrW/5);
+    } else {
+      refresh();
+    }
     println(popupX);
     println(popupY);
   } else { 
@@ -69,3 +73,29 @@ void menu3() {
   }
 
   //menuType = 2
+  void refresh() {
+    image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
+    image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
+    image(exitImage, exitDivX, 0, exitDivWH, exitDivWH);
+     if (menuType != 3) {
+    image(dialogueBox, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
+  } else {
+    image(talk, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
+  }
+  }
+  
+  //music buttons
+  void button0(){
+  }
+  
+  void button1() {
+  }
+  
+  void button2() {
+  }
+  
+  void button3() {
+  }
+  
+  void button4() {
+  }

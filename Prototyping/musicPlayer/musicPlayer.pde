@@ -10,9 +10,18 @@ Minim minim;
 
 //mus control
 int shuffle;
+float scale;
+float progress;
+float position;
+float length;
+float startPosX;
+float startPosY;
+int[] buttons;
+int shift;
+PImage[][][] button;
 
 //popup
-boolean popupstatus;
+int popupstatus;
 float popupX;
 float popupY;
 
@@ -164,6 +173,18 @@ void setup() {
     // println(file);
     labels[i-1] = loadImage(file);
   }
+  button = new PImage[5][3][2];
+  for (int x = 0; x < 5; x++) {
+    for (int y = 0; y < 3; y++) {
+      for (int z = 0; z < 2; z++) {
+        String file = "../../Assets/IMG/BTN/" + x + "_" + y + "_" + z + ".png";
+        button[x][y][z] = loadImage(file);
+        if(button[x][y][z] == null) {
+          button[x][y][z] = loadImage("../../Assets/IMG/SPAM/error.png");
+        }
+      }
+    }
+  }
 
 
 
@@ -204,8 +225,12 @@ void setup() {
   buttonCount = 4;
   offset = 0;
   knight = false;
-  popupstatus = false;
+  popupstatus = 0;
   shuffle = 0;
+  scale = scrW/7;
+  startPosX = dialogueDivX+(dialogueDivW-1.3*(optDivW)-scale)/2;
+  buttons = new int[2];
+  shift = 0;
 
 
   //TXT
@@ -233,6 +258,8 @@ void setup() {
   furthestLine = 0;
   //fontSize /= 2;
   k = 48;
+  image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
+  image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
 }
 //cH = common height
 //cW = common width
@@ -249,6 +276,13 @@ void setup() {
 
 
 void draw() {
+  //refresh();
+  if (popupX<cH+songlistDivW) {
+    popupX=cH+songlistDivW;
+  }
+  if (popupY>scrH-dialogueDivH-scrW/6) {
+    popupY=scrH-dialogueDivH-scrW/6;
+  }
 
 
   frmc = frameCount;
@@ -328,9 +362,8 @@ void draw() {
   }
 
 
-
   //shop background
-  image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
+
   //image(shop, 0, 0, scrW - (cH + 2*cW), scrH+100);
 
 
@@ -339,11 +372,11 @@ void draw() {
 
 
 
-  image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
+  //image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
 
 
   //rect(exitDivX, 0, exitDivWH, exitDivWH);
-  image(exitImage, exitDivX, 0, exitDivWH, exitDivWH);
+
 
 
   //rect(dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
@@ -353,8 +386,23 @@ void draw() {
     image(talk, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
   }
 
-  if (popupstatus == true ) {  //&& popupX != prevpopupX || popupY != prevpopupY
+  if (popupstatus == 1 && popupX != prevpopupX || popupY != prevpopupY) {  //&& popupX != prevpopupX || popupY != prevpopupY
+    refresh();
     image(popup, popupX, popupY, scrW/5, scrW/5);
+    startPosX = popupX + cW/4;
+    startPosY = popupY+scrW/6;
+    //  popupstatus = false;
+  }
+  if (popupstatus == 1) {
+    position = float(MUS[current].position());
+    length = MUS[current].length();
+    progress = position/length;
+    strokeWeight(20);
+    stroke(#ff7f27);
+    line(startPosX, startPosY, startPosX+scale, startPosY);
+    strokeWeight(10);
+    stroke(#FFFF00);
+    line(startPosX, startPosY, startPosX+2*scale*progress, startPosY);
   }
   prevpopupX = popupX;
   prevpopupY = popupY;
@@ -432,16 +480,18 @@ void draw() {
   }
 
   //fps label
-   textFont(common, 2*fontSize/3);
+  textFont(common, 2*fontSize/3);
   rndfrmr = round(frmr*10);
   frmrLbl = "fps: "+rndfrmr/10;
-  text(frmrLbl, ((92-(2.7128/2)*floor((log(frmr)))/log(10.000))-10)*scrW/100, 3*cH/2);
-  text("framecount: ", frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+11)*scrW/100, cH/2, cH/2);
+  text(frmrLbl, ((92-(2.7128/2)*floor((log(frmr)))/log(10.000))-10)*scrW/100, 9*scrH/10);// y = 3*cH/2
+  //text("framecount: ", frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+11)*scrW/100, cH/2, cH/2);
 
   prevMus = current;
   prevScroll = scroll;
   prevXz = xz;
   prevSong = current;
+  prevpopupX = popupX;
+  prevpopupY = popupY;
 } //END OF DRAW FUNCTION
 
 //menu movement keyboard control
@@ -471,14 +521,14 @@ void keyPressed() {
       if (pause == true) {
         pause = false;
       }
-      if(shuffle == 0) {
-      if (current<mus_count-1) {
-        current++;
-        MUS[current].loop();
-      } else {
-        current=0;
-        MUS[current].loop();
-      }
+      if (shuffle == 0) {
+        if (current<mus_count-1) {
+          current++;
+          MUS[current].loop();
+        } else {
+          current=0;
+          MUS[current].loop();
+        }
       } else {
         current = round(random(mus_count-1));
         MUS[current].loop();
@@ -494,6 +544,8 @@ void keyPressed() {
         current=mus_count-1;
         MUS[current].loop();
       }
+    } else if (keyCode == SHIFT) {
+      shift = 1;
     }
   } else if (key == 'z' || key == ENTER || key == 'Z') {
     if (menuType % 3 != 0) {
@@ -545,11 +597,17 @@ void keyPressed() {
   } else if (key == 'l') {
     MUS[current].setGain(MUS[current].getGain() + 1);
   } else if (key == 's') {
-   shuffle = abs(shuffle-1);
+    shuffle = abs(shuffle-1);
   }
 }
 
-
+void keyReleased() {
+  if (key == CODED) {
+    if (keyCode == SHIFT) {
+      shift = 0;
+    }
+  }
+}
 
 
 void mouseWheel(MouseEvent event) {
@@ -561,5 +619,12 @@ void mouseWheel(MouseEvent event) {
     if (abs(scroll)<cH) {
       scroll = scrH/216;
     }
+  }
+}
+
+void mouseDragged() {
+  if (popupX<=mouseX && mouseX<=popupX+scrW/5 && popupY <= mouseY && mouseY<= popupY+scrW/5) {
+    popupX = mouseX-scrW/10;
+    popupY = mouseY-cW/5;
   }
 }
