@@ -43,6 +43,7 @@ int shift;
 PImage[][][] button;
 int[] buttonType;
 int[] buttonActive;
+int[] buttonShift;
 int counter;
 
 
@@ -253,10 +254,11 @@ void setup() {
   startPosX = dialogueDivX+(dialogueDivW-1.3*(optDivW)-scale)/2;
   buttons = new int[2];
   shift = 0;
-  clickbait_num = 16;
+  clickbait_num = 18;
   clickbait = loadStrings("../Assets/DIA/popupTitles.txt");
   buttonActive = new int[5];
   buttonType = new int[5];
+  buttonShift = new int[5]; buttonShift[1] = 1; buttonShift[2] = 2; buttonShift[3] = 1; buttonShift[4] = 1;
   for(int i = 0; i < 5; i++) {
     buttonType[i] = 0;
     buttonActive[i] = 0;
@@ -287,6 +289,8 @@ void setup() {
   k = 48;
   image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
   image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
+  
+  println("ignore the 'file is inaccessible error', it's the product of a shortcut from line 204-206");
 }
 
 
@@ -296,6 +300,11 @@ void setup() {
 
 void draw() {
   //refresh();
+ /*if(shift == 1){
+   for(int i = 1; i < 4; i++) {
+     buttonType[i] = ;
+   }
+ } */
  
   if (popupX<cH+songlistDivW) {
     popupX=cH+songlistDivW;
@@ -428,7 +437,11 @@ void draw() {
     line(startPosX, startPosY, startPosX+2*scale*progress, startPosY);
     float ratio = 13*scrW/450;
     for(int i = 0; i <5; i++) {
+      if(shift == 0) {
     image(button[i][buttonType[i]][buttonActive[i]], startPosX+i*ratio, startPosY-2*cW/5, ratio, ratio);
+      } else {
+        image(button[i][buttonShift[i]][buttonActive[i]], startPosX+i*ratio, startPosY-2*cW/5, ratio, ratio);
+      }
     }
   }
 

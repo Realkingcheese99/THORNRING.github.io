@@ -31,4 +31,8 @@ This application is only supported by OS 2000.
 // 15
 Click Here! Click Here! Click Here! Click Here!
 // 16
-THIS IS NOT A JOKE! YOU ARE THE 100.000th VISITOR! Click here
+THIS IS NOT A JOKE! YOU ARE THE 100 000th VISITOR! Click here
+// 17
+from #1SALESMAN1997:     Action Required: Your PIPIS account has been hacked! Verify Now.
+// 18
+from BIGSHOT-deals:      Thank you for your purchase of PIPIS. Click here to confirm.
