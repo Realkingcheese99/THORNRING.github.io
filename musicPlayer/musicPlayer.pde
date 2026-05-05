@@ -43,6 +43,7 @@ int shift;
 PImage[][][] button;
 int[] buttonType;
 int[] buttonActive;
+int counter;
 
 
 //popup
@@ -260,6 +261,7 @@ void setup() {
     buttonType[i] = 0;
     buttonActive[i] = 0;
   }
+  counter = 0;
 
 
   //TXT
@@ -403,7 +405,6 @@ void draw() {
   } else {
     image(talk, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
   }
-
   if (popupstatus == 1 && popupX != prevpopupX || popupY != prevpopupY) {  //&& popupX != prevpopupX || popupY != prevpopupY
     refresh();
     image(popup, popupX, popupY, scrW/5, scrW/5);
@@ -413,9 +414,8 @@ void draw() {
     
     textFont(common, 2*fontSize/5);
     text(clickbait[(clickbait_random*2)+1], startPosX, popupY+cH/2,scrW/7,scrW/5);
-    
-    //  popupstatus = false;
   }
+    //  popupstatus = false;
   if (popupstatus == 1) {
     position = float(MUS[current].position());
     length = MUS[current].length();
@@ -431,6 +431,7 @@ void draw() {
     image(button[i][buttonType[i]][buttonActive[i]], startPosX+i*ratio, startPosY-2*cW/5, ratio, ratio);
     }
   }
+
   prevpopupX = popupX;
   prevpopupY = popupY;
 
@@ -628,6 +629,11 @@ void keyPressed() {
   } else if (key == 's') {
     shuffle = abs(shuffle-1);
     buttonActive[4] = shuffle;
+  } else if(key == 'q') {
+    counter++;
+    buttonType[0] = int(sin((PI/2)*(counter+3))+1);
+    println(buttonType[0]);
+    //refresh();
   }
 }
 
