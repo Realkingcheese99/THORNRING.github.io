@@ -41,11 +41,17 @@ float startPosY;
 int[] buttons;
 int shift;
 PImage[][][] button;
+int[] buttonType;
+int[] buttonActive;
+
 
 //popup
 int popupstatus;
 float popupX;
 float popupY;
+String[] clickbait;
+int clickbait_num;
+int clickbait_random;
 
 //OPTIMIZATION
 float prevScroll;
@@ -246,13 +252,21 @@ void setup() {
   startPosX = dialogueDivX+(dialogueDivW-1.3*(optDivW)-scale)/2;
   buttons = new int[2];
   shift = 0;
+  clickbait_num = 16;
+  clickbait = loadStrings("../Assets/DIA/popupTitles.txt");
+  buttonActive = new int[5];
+  buttonType = new int[5];
+  for(int i = 0; i < 5; i++) {
+    buttonType[i] = 0;
+    buttonActive[i] = 0;
+  }
 
 
   //TXT
   textAlign(LEFT, BASELINE);
-  dialogue = loadStrings("../../Assets/DIA/Dialogue.txt");
+  dialogue = loadStrings("../Assets/DIA/Dialogue.txt");
   decay = 0.9;
-  common = createFont("../../Assets/DIA/common.ttf", 32);
+  common = createFont("../Assets/DIA/common.ttf", 32);
   iWhile = 0;
   fontSize = scrH;
   textFont(common, fontSize);
@@ -393,8 +407,13 @@ void draw() {
   if (popupstatus == 1 && popupX != prevpopupX || popupY != prevpopupY) {  //&& popupX != prevpopupX || popupY != prevpopupY
     refresh();
     image(popup, popupX, popupY, scrW/5, scrW/5);
+    
     startPosX = popupX + cW/4;
     startPosY = popupY+scrW/6;
+    
+    textFont(common, 2*fontSize/5);
+    text(clickbait[(clickbait_random*2)+1], startPosX, popupY+cH/2,scrW/7,scrW/5);
+    
     //  popupstatus = false;
   }
   if (popupstatus == 1) {
@@ -407,6 +426,10 @@ void draw() {
     strokeWeight(10);
     stroke(#FFFF00);
     line(startPosX, startPosY, startPosX+2*scale*progress, startPosY);
+    float ratio = 13*scrW/450;
+    for(int i = 0; i <5; i++) {
+    image(button[i][buttonType[i]][buttonActive[i]], startPosX+i*ratio, startPosY-2*cW/5, ratio, ratio);
+    }
   }
   prevpopupX = popupX;
   prevpopupY = popupY;
@@ -536,6 +559,7 @@ void keyPressed() {
         current = round(random(mus_count-1));
         MUS[current].loop();
       }
+      buttonActive[3] = 1;
     }
     if (keyCode == LEFT) {
       MUS[current].rewind();
@@ -578,13 +602,15 @@ void keyPressed() {
     if (pause == true) {
       pause = false;
       MUS[current].play();
+      buttonType[2] = 1;
     } else {
       pause = true;
       MUS[current].pause();
+      buttonType[2] = 0;
     }
   } else if (key == '+') {
     xz = 1;
-  } else if (key == 'x' || keyCode == SHIFT) {
+  } else if (key == 'x') {
     if (menuType % 2 == 0) {
       if (menuType == 2) {
         SND[16].play(0);
@@ -601,6 +627,7 @@ void keyPressed() {
     MUS[current].setGain(MUS[current].getGain() + 1);
   } else if (key == 's') {
     shuffle = abs(shuffle-1);
+    buttonActive[4] = shuffle;
   }
 }
 
