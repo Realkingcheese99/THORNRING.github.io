@@ -8,7 +8,7 @@ void menu0() {
     popupX = cH+songlistDivW + random(scrW-cH-songlistDivW-scrW/5);
     popupY = random(scrH-dialogueDivH-scrW/5);
     clickbait_random = round(random(clickbait_num));
-    clickbait_random = clickbait_num;
+  //  clickbait_random = clickbait_num;
     } else {
       refresh();
     }

@@ -45,6 +45,8 @@ int[] buttonType;
 int[] buttonActive;
 int[] buttonShift;
 int counter;
+float buttonSize;
+int buttonpress;
 
 
 //popup
@@ -264,6 +266,7 @@ void setup() {
     buttonActive[i] = 0;
   }
   counter = 0;
+  buttonSize = 13*scrW/450;
 
 
   //TXT
@@ -435,12 +438,11 @@ void draw() {
     strokeWeight(10);
     stroke(#FFFF00);
     line(startPosX, startPosY, startPosX+2*scale*progress, startPosY);
-    float ratio = 13*scrW/450;
     for(int i = 0; i <5; i++) {
       if(shift == 0) {
-    image(button[i][buttonType[i]][buttonActive[i]], startPosX+i*ratio, startPosY-2*cW/5, ratio, ratio);
+    image(button[i][buttonType[i]][buttonActive[i]], startPosX+i*buttonSize, startPosY-2*cW/5, buttonSize, buttonSize);
       } else {
-        image(button[i][buttonShift[i]][buttonActive[i]], startPosX+i*ratio, startPosY-2*cW/5, ratio, ratio);
+        image(button[i][buttonShift[i]][buttonActive[i]], startPosX+i*buttonSize, startPosY-2*cW/5, buttonSize, buttonSize);
       }
     }
   }
@@ -479,6 +481,11 @@ void draw() {
         text(dialogue[xz+i].substring(0, charSpd*charDisplay[i]), cH+11*cW/5+dialogueDivW-5*optDivW/4, dialogueDivH/6*i+(11*scrH/18), dialogueDivW, dialogueDivH);
       }
     }
+  }
+  
+  if(buttonpress != 0) {
+    println("buttonpress: " + buttonpress);
+    buttonpress = 0;
   }
 
 
@@ -675,5 +682,13 @@ void mouseDragged() {
   if (popupX<=mouseX && mouseX<=popupX+scrW/5 && popupY <= mouseY && mouseY<= popupY+scrW/25 && popupstatus == 1) {
     popupX = mouseX-scrW/10;
     popupY = mouseY-cW/5;
+  }
+}
+
+void mouseReleased() {
+  for(int i = 0; i<5; i++) {
+    if(mouseX>=startPosX+i*buttonSize && mouseX<startPosX+(i+1)*buttonSize && mouseY>=startPosY-2*cW/5 && mouseY <= startPosY-2*cW/5+buttonSize) { //&& mouseY <= startPosY+buttonSize
+      buttonpress = i+1;
+    }
   }
 }
