@@ -532,6 +532,13 @@ void draw() {
   frmrLbl = "fps: "+rndfrmr/10;
   text(frmrLbl, ((72-(2.7128/2)*floor((log(frmr)))/log(10.000))-10)*scrW/100, 9*scrH/10);// y = 3*cH/2
   //text("framecount: ", frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+11)*scrW/100, cH/2, cH/2);
+    for(int i = 0; i<5; i++) {
+    if(mouseX>=startPosX+i*buttonSize && mouseX<startPosX+(i+1)*buttonSize && mouseY>=startPosY-2*cW/5 && mouseY <= startPosY-2*cW/5+buttonSize) { //&& mouseY <= startPosY+buttonSize
+      buttonActive[i] = 1;
+    } else {
+      buttonActive[i] = 0;
+    }
+  }
 
   prevMus = current;
   prevScroll = scroll;
@@ -647,11 +654,11 @@ void keyPressed() {
   } else if (key == 'l') {
     MUS[current].setGain(MUS[current].getGain() + 1);
   } else if (key == 's') {
-    shuffle = abs(shuffle-1);
+    shuffle = toggle(shuffle);
     buttonActive[4] = shuffle;
   } else if(key == 'q') {
     counter++;
-    buttonType[0] = int(sin((PI/2)*(counter+3))+1);
+    buttonType[0] = counter % 3;
     println(buttonType[0]);
     //refresh();
   }

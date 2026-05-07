@@ -99,3 +99,8 @@ void menu3() {
   
   void button4() {
   }
+  
+    int toggle(int variable) {
+    variable = abs(variable-1);
+    return(variable);
+  }
