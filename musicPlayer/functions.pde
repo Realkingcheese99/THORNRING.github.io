@@ -91,6 +91,7 @@ void menu3() {
   }
   
   void button1() {
+    
   }
   
   void button2() {
@@ -111,6 +112,7 @@ void menu3() {
   }
   
   void button3() {
+    prevSong = current;
       MUS[current].rewind();
       MUS[current].pause();
       if (pause == true) {
