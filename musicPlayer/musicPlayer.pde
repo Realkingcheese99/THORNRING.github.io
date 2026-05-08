@@ -1,22 +1,22 @@
 /*
 Music App, Final Project
-Make sure to install the minim library on your computer for this program to work
-
-CREDITS:
-Most sprites from Deltarune by Toby Fox
-Music from Deltarune by Toby Fox
-Sprites are ripped from spriters-resource.com
-Chapter label sprites by me
-Button sprites by Damien
-
-to-do list:
-- mouse interaction - partially done
-- spritework - partially done
-- keyboard interaction - partially done
-- adding dialogue - need to flesh out
-- custom keybinds if I have time
-- finish popup
-*/
+ Make sure to install the minim library on your computer for this program to work
+ 
+ CREDITS:
+ Most sprites from Deltarune by Toby Fox
+ Music from Deltarune by Toby Fox
+ Sprites are ripped from spriters-resource.com
+ Chapter label sprites by me
+ Button sprites by Damien
+ 
+ to-do list:
+ - mouse interaction - partially done
+ - spritework - partially done
+ - keyboard interaction - partially done
+ - adding dialogue - need to flesh out
+ - custom keybinds if I have time
+ - finish popup
+ */
 
 //minim
 import ddf.minim.*;
@@ -46,7 +46,6 @@ int[] buttonActive;
 int[] buttonShift;
 int counter;
 float buttonSize;
-int buttonpress;
 
 
 //popup
@@ -204,7 +203,7 @@ void setup() {
       for (int z = 0; z < 2; z++) {
         String file = "../Assets/IMG/BTN/" + x + "_" + y + "_" + z + ".png";
         button[x][y][z] = loadImage(file);
-        if(button[x][y][z] == null) {
+        if (button[x][y][z] == null) {
           button[x][y][z] = loadImage("../Assets/IMG/SPAM/error.png");
         }
       }
@@ -260,8 +259,12 @@ void setup() {
   clickbait = loadStrings("../Assets/DIA/popupTitles.txt");
   buttonActive = new int[5];
   buttonType = new int[5];
-  buttonShift = new int[5]; buttonShift[1] = 1; buttonShift[2] = 2; buttonShift[3] = 1; buttonShift[4] = 1;
-  for(int i = 0; i < 5; i++) {
+  buttonShift = new int[5];
+  buttonShift[1] = 1;
+  buttonShift[2] = 2;
+  buttonShift[3] = 1;
+  buttonShift[4] = 1;
+  for (int i = 0; i < 5; i++) {
     buttonType[i] = 0;
     buttonActive[i] = 0;
   }
@@ -292,8 +295,8 @@ void setup() {
   k = 48;
   image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
   image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
-  
-  println("ignore the 'file is inaccessible error', it's the product of a shortcut from line 204-206");
+
+  println("ignore the 'file is inaccessible error', it's the product of a shortcut from line 206-208");
 }
 
 
@@ -303,12 +306,12 @@ void setup() {
 
 void draw() {
   //refresh();
- /*if(shift == 1){
+  /*if(shift == 1){
    for(int i = 1; i < 4; i++) {
-     buttonType[i] = ;
+   buttonType[i] = ;
    }
- } */
- 
+   } */
+
   if (popupX<cH+songlistDivW) {
     popupX=cH+songlistDivW;
   }
@@ -420,14 +423,14 @@ void draw() {
   if (popupstatus == 1 && popupX != prevpopupX || popupY != prevpopupY) {  //&& popupX != prevpopupX || popupY != prevpopupY
     refresh();
     image(popup, popupX, popupY, scrW/5, scrW/5);
-    
+
     startPosX = popupX + cW/4;
     startPosY = popupY+scrW/6;
-    
+
     textFont(common, 2*fontSize/5);
-    text(clickbait[(clickbait_random*2)+1], startPosX, popupY+cH/2,scrW/7,scrW/5);
+    text(clickbait[(clickbait_random*2)+1], startPosX, popupY+cH/2, scrW/7, scrW/5);
   }
-    //  popupstatus = false;
+  //  popupstatus = false;
   if (popupstatus == 1) {
     position = float(MUS[current].position());
     length = MUS[current].length();
@@ -438,9 +441,9 @@ void draw() {
     strokeWeight(10);
     stroke(#FFFF00);
     line(startPosX, startPosY, startPosX+2*scale*progress, startPosY);
-    for(int i = 0; i <5; i++) {
-      if(shift == 0) {
-    image(button[i][buttonType[i]][buttonActive[i]], startPosX+i*buttonSize, startPosY-2*cW/5, buttonSize, buttonSize);
+    for (int i = 0; i <5; i++) {
+      if (shift == 0) {
+        image(button[i][buttonType[i]][buttonActive[i]], startPosX+i*buttonSize, startPosY-2*cW/5, buttonSize, buttonSize);
       } else {
         image(button[i][buttonShift[i]][buttonActive[i]], startPosX+i*buttonSize, startPosY-2*cW/5, buttonSize, buttonSize);
       }
@@ -482,11 +485,7 @@ void draw() {
       }
     }
   }
-  
-  if(buttonpress != 0) {
-    println("buttonpress: " + buttonpress);
-    buttonpress = 0;
-  }
+
 
 
 
@@ -532,8 +531,8 @@ void draw() {
   frmrLbl = "fps: "+rndfrmr/10;
   text(frmrLbl, ((72-(2.7128/2)*floor((log(frmr)))/log(10.000))-10)*scrW/100, 9*scrH/10);// y = 3*cH/2
   //text("framecount: ", frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+11)*scrW/100, cH/2, cH/2);
-    for(int i = 0; i<5; i++) {
-    if(mouseX>=startPosX+i*buttonSize && mouseX<startPosX+(i+1)*buttonSize && mouseY>=startPosY-2*cW/5 && mouseY <= startPosY-2*cW/5+buttonSize) { //&& mouseY <= startPosY+buttonSize
+  for (int i = 0; i<5; i++) {
+    if (mouseX>=startPosX+i*buttonSize && mouseX<startPosX+(i+1)*buttonSize && mouseY>=startPosY-2*cW/5 && mouseY <= startPosY-2*cW/5+buttonSize) { //&& mouseY <= startPosY+buttonSize
       buttonActive[i] = 1;
     } else {
       buttonActive[i] = 0;
@@ -570,24 +569,7 @@ void keyPressed() {
       }
     }
     if (keyCode == RIGHT) {
-      MUS[current].rewind();
-      MUS[current].pause();
-      if (pause == true) {
-        pause = false;
-      }
-      if (shuffle == 0) {
-        if (current<mus_count-1) {
-          current++;
-          MUS[current].loop();
-        } else {
-          current=0;
-          MUS[current].loop();
-        }
-      } else {
-        current = round(random(mus_count-1));
-        MUS[current].loop();
-      }
-      buttonActive[3] = 1;
+      button3();
     }
     if (keyCode == LEFT) {
       MUS[current].rewind();
@@ -627,15 +609,7 @@ void keyPressed() {
     //popupY = popupY+100;
     //popupX = random(cH + 2*cW, scrW - cW);
   } else if (key == ' ') {
-    if (pause == true) {
-      pause = false;
-      MUS[current].play();
-      buttonType[2] = 1;
-    } else {
-      pause = true;
-      MUS[current].pause();
-      buttonType[2] = 0;
-    }
+    button2();
   } else if (key == '+') {
     xz = 1;
   } else if (key == 'x') {
@@ -656,7 +630,7 @@ void keyPressed() {
   } else if (key == 's') {
     shuffle = toggle(shuffle);
     buttonActive[4] = shuffle;
-  } else if(key == 'q') {
+  } else if (key == 'q') {
     counter++;
     buttonType[0] = counter % 3;
     println(buttonType[0]);
@@ -693,9 +667,19 @@ void mouseDragged() {
 }
 
 void mouseReleased() {
-  for(int i = 0; i<5; i++) {
-    if(mouseX>=startPosX+i*buttonSize && mouseX<startPosX+(i+1)*buttonSize && mouseY>=startPosY-2*cW/5 && mouseY <= startPosY-2*cW/5+buttonSize) { //&& mouseY <= startPosY+buttonSize
-      buttonpress = i+1;
+  for (int i = 0; i<5; i++) {
+    if (mouseX>=startPosX+i*buttonSize && mouseX<startPosX+(i+1)*buttonSize && mouseY>=startPosY-2*cW/5 && mouseY <= startPosY-2*cW/5+buttonSize) { //&& mouseY <= startPosY+buttonSize
+      if (i == 0) {
+        button0();
+      } else if (i == 1) {
+        button1();
+      } else if (i == 2) {
+        button2();
+      } else if (i == 3) {
+        button3();
+      } else if (i == 4) {
+        button4();
+      }
     }
   }
 }

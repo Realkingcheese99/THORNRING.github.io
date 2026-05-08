@@ -86,15 +86,49 @@ void menu3() {
   
   //music buttons
   void button0(){
+     counter++;
+    buttonType[0] = counter % 3;
   }
   
   void button1() {
   }
   
   void button2() {
+    if(shift == 0) {
+       if (pause == true) {
+      pause = false;
+      MUS[current].play();
+      buttonType[2] = 1;
+    } else {
+      pause = true;
+      MUS[current].pause();
+      buttonType[2] = 0;
+    }
+    } else {
+      MUS[current].rewind();
+      MUS[current].pause();
+    }
   }
   
   void button3() {
+      MUS[current].rewind();
+      MUS[current].pause();
+      if (pause == true) {
+        pause = false;
+      }
+      if (shuffle == 0) {
+        if (current<mus_count-1) {
+          current++;
+          MUS[current].loop();
+        } else {
+          current=0;
+          MUS[current].loop();
+        }
+      } else {
+        current = round(random(mus_count-1));
+        MUS[current].loop();
+      }
+      buttonActive[3] = 1;
   }
   
   void button4() {
@@ -103,4 +137,20 @@ void menu3() {
     int toggle(int variable) {
     variable = abs(variable-1);
     return(variable);
+  }
+  
+  void pauseToggle() {
+    if (pause == true) {
+      pause = false;
+      MUS[current].play();
+      buttonType[2] = 1;
+    } else {
+      pause = true;
+      MUS[current].pause();
+      buttonType[2] = 0;
+    }
+  }
+  
+  void nextSong() {
+    
   }
