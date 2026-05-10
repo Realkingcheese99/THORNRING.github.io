@@ -7,7 +7,6 @@ Music App, Final Project
  Music from Deltarune by Toby Fox
  Sprites are ripped from spriters-resource.com
  Chapter label sprites by me
- Button sprites by Damien
  
  to-do list:
  - mouse interaction - partially done
@@ -30,6 +29,9 @@ Minim minim;
 
 // --global var
 
+//keybinds
+String[] keybinds;
+
 //mus control
 int shuffle;
 float scale;
@@ -44,8 +46,14 @@ PImage[][][] button;
 int[] buttonType;
 int[] buttonActive;
 int[] buttonShift;
-int counter;
+int[] counter;
 float buttonSize;
+int[] songList;
+int currentSong;
+IntList shuffledList;
+int shuffleIndex;
+int loopCount;
+IntList prevSongs;
 
 
 
@@ -191,8 +199,9 @@ void setup() {
   songTitleBox = loadImage("../Assets/IMG/BOX/box.png");
   talk = loadImage("../Assets/IMG/BOX/talk.png");
   FRIEND = loadImage("../Assets/IMG/SPAM/IMAGE_FRIEND.png");
-  pauseButton = loadImage("../Assets/IMG/BTN/pause_1.png");
-  pause2 = loadImage("../Assets/IMG/BTN/pause_2.png");
+  // pauseButton = loadImage("../Assets/IMG/BTN/pause_1.png");
+  // pause2 = loadImage("../Assets/IMG/BTN/pause_2.png");
+  speechBubble = loadImage("../Assets/IMG/BOX/speechBubble.png");
   labels = new PImage[5];
   for (int i = 1; i<6; i++) {
     String file = "../Assets/IMG/BOX/label_"+str(i)+".png";
@@ -269,9 +278,19 @@ void setup() {
     buttonType[i] = 0;
     buttonActive[i] = 0;
   }
-  counter = 0;
-  buttonSize = 13*scrW/450;
+  counter = new int[3];
+  counter[0] = 0;
+  counter[1] = 0;
+  counter[2] = 0;
 
+  buttonSize = 13*scrW/450;
+  shuffledList = new IntList();
+  for ( int i = 0; i<mus_count; i++) {
+    shuffledList.append(i);
+  }
+  loopCount = 0;
+  prevSongs = new IntList();
+  keybinds = loadStrings("../Assets/DIA/keybinds.txt");
 
   //TXT
   textAlign(LEFT, BASELINE);
@@ -340,7 +359,7 @@ void draw() {
     soulLocation = (-1*menuType)+1;
   }
 
-  if (current != prevMus ||scroll != prevScroll) {
+  if (current != int(prevMus) ||scroll != prevScroll) {
     //image loading
     offset = 0;
     for (int z=0; z < floor(5*mus_count/4); z=z+1) {
@@ -405,7 +424,7 @@ void draw() {
 
 
 
-
+  //image(speechBubble, spamDivX-1.7*cH*150/86, spamDivY+3*cH, 2*cH*150/86, 2*cH);
 
 
   //image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
@@ -442,6 +461,7 @@ void draw() {
     strokeWeight(10);
     stroke(#FFFF00);
     line(startPosX, startPosY, startPosX+2*scale*progress, startPosY);
+    buttonShift[0] = buttonType[0];
     for (int i = 0; i <5; i++) {
       if (shift == 0) {
         image(button[i][buttonType[i]][buttonActive[i]], startPosX+i*buttonSize, startPosY-2*cW/5, buttonSize, buttonSize);
@@ -520,7 +540,7 @@ void draw() {
 
 
 
-  if (millis() < 1) {
+  if (millis() > 1) {
     afrmr = frmc/((millis())/1000);
   } else {
     afrmr = 0;
@@ -539,8 +559,18 @@ void draw() {
       buttonActive[i] = 0;
     }
   }
+  if (float(MUS[current].position()) >=  MUS[current].length()/2.04) {
+    if (buttonType[0] == 0) {
+      button3();
+    } else if (buttonType[0] == 1) {
+      loopCount++;
+      if (loopCount == 2) {
+        button3();
+        loopCount = 0;
+      }
+    }
+  }
 
-  prevMus = current;
   prevScroll = scroll;
   prevXz = xz;
   prevSong = current;
@@ -577,15 +607,15 @@ void keyPressed() {
       MUS[current].pause();
       if (current>0) {
         current--;
-        MUS[current].loop();
+        playMus();
       } else {
         current=mus_count-1;
-        MUS[current].loop();
+        playMus();
       }
     } else if (keyCode == SHIFT) {
       shift = 1;
     }
-  } else if (key == 'z' || key == ENTER || key == 'Z') {
+  } else if (key == keybinds[0].charAt(0) || key == ENTER || key == keybinds[0].charAt(2)) {
     if (menuType % 3 != 0) {
       SND[9].play(0);
       if (menuY==0) {
@@ -609,11 +639,11 @@ void keyPressed() {
   } else if (key == 'c') {
     //popupY = popupY+100;
     //popupX = random(cH + 2*cW, scrW - cW);
-  } else if (key == ' ') {
+  } else if (key == keybinds[1].charAt(0)) {
     button2();
-  } else if (key == '+') {
+  } else if (key == keybinds[2].charAt(0)) {
     xz = 1;
-  } else if (key == 'x') {
+  } else if (key == keybinds[3].charAt(0)) {
     if (menuType % 2 == 0) {
       if (menuType == 2) {
         SND[16].play(0);
@@ -624,18 +654,16 @@ void keyPressed() {
     } else {
       charDisplay[furthestLine] = dialogue[furthestLine+xz].length() -3;
     }
-  } else if (key == 'k') {
+  } else if (key == keybinds[4].charAt(0)) {
     MUS[current].setGain(MUS[current].getGain() - 1);
-  } else if (key == 'l') {
+  } else if (key == keybinds[5].charAt(0)) {
     MUS[current].setGain(MUS[current].getGain() + 1);
-  } else if (key == 's') {
-    shuffle = toggle(shuffle);
-    buttonActive[4] = shuffle;
-  } else if (key == 'q') {
-    counter++;
-    buttonType[0] = counter % 3;
-    println(buttonType[0]);
-    //refresh();
+  } else if (key == keybinds[6].charAt(0)) {
+    button4();
+    // buttonType[4] = counter[2]%3;
+  } else if (key == keybinds[7].charAt(0) || key == keybinds[7].charAt(2)) {
+    counter[0]++;
+    buttonType[0] = counter[0] % 3;
   }
 }
 

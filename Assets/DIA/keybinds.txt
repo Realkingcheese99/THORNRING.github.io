@@ -1,0 +1,8 @@
+z Z // select
+ // pause
++ // reset dialogue
+x X // skip/back
+k K // vol down
+l L // vol up
+s S // shuffle
+q Q // loop

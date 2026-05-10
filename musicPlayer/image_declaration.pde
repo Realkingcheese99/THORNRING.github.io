@@ -1,6 +1,6 @@
 PImage exitImage;
 PImage aCoverBox;
-PImage shop; 
+PImage shop;
 PImage neutral;
 PImage dialogueBox;
 PImage popup;
@@ -11,9 +11,4 @@ PImage pauseButton;
 PImage pause2;
 PImage talk;
 PImage[] labels;
-
-//int hr = 11;
-//float scrH = displayHeight;
-//float scrW = displayWidth;
-//float cW = scrW/9;
-//float cH = scrH/hr;
+PImage speechBubble;

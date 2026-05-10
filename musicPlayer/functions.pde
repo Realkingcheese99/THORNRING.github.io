@@ -2,17 +2,16 @@
 //I'm feeling lucky
 void menu0() {
   if (menuType == 1) {
-    //text("hot singles in your area", scrW/2, scrH/2);
     popupstatus = abs(popupstatus-1);
-    if(popupstatus == 1) {
-    popupX = cH+songlistDivW + random(scrW-cH-songlistDivW-scrW/5);
-    popupY = random(scrH-dialogueDivH-scrW/5);
-    clickbait_random = round(random(clickbait_num));
-  //  clickbait_random = clickbait_num;
+    if (popupstatus == 1) {
+      popupX = cH+songlistDivW + random(scrW-cH-songlistDivW-scrW/5);
+      popupY = random(scrH-dialogueDivH-scrW/5);
+      clickbait_random = round(random(clickbait_num));
+      //  clickbait_random = clickbait_num;
     } else {
       refresh();
     }
-  } else { 
+  } else {
     xz = 9;
   }
 }
@@ -47,101 +46,52 @@ int z;
 //Escape
 void menu3() {
   if (menuType == 1) {
-
-    //if(random(1,10) == 10) {
-    //for(z=0; z<=scrH/10; z++){
-    //checker = z;
-    //image(FRIEND, (scrW-z)/2, (scrH-z)/2, 536, 497);
     exit();
-    //}
   } else {
     xz = 131;
   }
 }
 
-  void menu4() {
-    if (menuType==1) {
-    } else {
-      xz = 1;
-      buttonCount = 4;
-      menuY = 0;
-    }
+void menu4() {
+  if (menuType==1) {
+  } else {
+    xz = 1;
+    buttonCount = 4;
+    menuY = 0;
   }
+}
 
 
-  void popup() {
-  }
+void popup() {
+}
 
-  //menuType = 2
-  void refresh() {
-    image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
-    image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
-    image(exitImage, exitDivX, 0, exitDivWH, exitDivWH);
-     if (menuType != 3) {
+//menuType = 2
+void refresh() {
+  image(shop, cH + 2*cW, 0, scrW - (cH + 2*cW), 5*scrH/9);
+  image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
+  image(exitImage, exitDivX, 0, exitDivWH, exitDivWH);
+  // image(speechBubble, spamDivX-1.7*cH*150/86, spamDivY+3*cH, 2*cH*150/86, 2*cH);
+  if (menuType != 3) {
     image(dialogueBox, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
   } else {
     image(talk, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
   }
+}
+
+//music buttons
+void button0() {
+  counter[0]++;
+  buttonType[0] = counter[0] % 3;
+}
+
+void button1() {
+  if (currentSong > 0) {
+    current = songList[currentSong-1];
   }
-  
-  //music buttons
-  void button0(){
-     counter++;
-    buttonType[0] = counter % 3;
-  }
-  
-  void button1() {
-    
-  }
-  
-  void button2() {
-    if(shift == 0) {
-       if (pause == true) {
-      pause = false;
-      MUS[current].play();
-      buttonType[2] = 1;
-    } else {
-      pause = true;
-      MUS[current].pause();
-      buttonType[2] = 0;
-    }
-    } else {
-      MUS[current].rewind();
-      MUS[current].pause();
-    }
-  }
-  
-  void button3() {
-    prevSong = current;
-      MUS[current].rewind();
-      MUS[current].pause();
-      if (pause == true) {
-        pause = false;
-      }
-      if (shuffle == 0) {
-        if (current<mus_count-1) {
-          current++;
-          MUS[current].loop();
-        } else {
-          current=0;
-          MUS[current].loop();
-        }
-      } else {
-        current = round(random(mus_count-1));
-        MUS[current].loop();
-      }
-      buttonActive[3] = 1;
-  }
-  
-  void button4() {
-  }
-  
-    int toggle(int variable) {
-    variable = abs(variable-1);
-    return(variable);
-  }
-  
-  void pauseToggle() {
+}
+
+void button2() {
+  if (shift == 0) {
     if (pause == true) {
       pause = false;
       MUS[current].play();
@@ -151,8 +101,78 @@ void menu3() {
       MUS[current].pause();
       buttonType[2] = 0;
     }
+  } else {
+    MUS[current].rewind();
+    MUS[current].pause();
   }
-  
-  void nextSong() {
-    
+}
+
+void button3() {
+  prevSongs.append(current);
+  prevMus = current;
+  MUS[current].rewind();
+  MUS[current].pause();
+  buttonType[2] = 1;
+  if (pause == true) {
+    pause = false;
   }
+  if (shuffle == 0) {
+    if (current<mus_count-1) {
+      current++;
+    } else {
+      current=0;
+    }
+  } else if (shuffle == 1) {
+    current = round(random(mus_count-1));
+  } else if (shuffle == 2) {
+    if (counter[2]+1 < mus_count) {
+      shuffledList.shuffle();
+      counter[2] = 0;
+    } else {
+      counter[2]++;
+    }
+    current = shuffledList.get(counter[2]);
+  }
+  playMus();
+  buttonActive[3] = 1;
+  println("current: " + current);
+  println("prevMus: " + prevMus);
+}
+
+void button4() {
+  counter[1]++;
+  buttonType[4] = counter[1]%3;
+  shuffle = counter[1]%3;
+  if (shuffle == 0) {
+  } else if (shuffle == 1) {
+  } else if (shuffle == 2) {
+    shuffledList.shuffle();
+  }
+}
+
+int toggle(int variable) {
+  variable = abs(variable-1);
+  return(variable);
+}
+
+void pauseToggle() {
+  if (pause == true) {
+    pause = false;
+    MUS[current].play();
+    buttonType[2] = 1;
+  } else {
+    pause = true;
+    MUS[current].pause();
+    buttonType[2] = 0;
+  }
+}
+
+void playMus() {
+  if (buttonType[0] == 0) {
+    MUS[current].play();
+  } else if ( buttonType[0] == 1) {
+    MUS[current].loop(1);
+  } else if (buttonType[0] == 2) {
+    MUS[current].loop();
+  }
+}
