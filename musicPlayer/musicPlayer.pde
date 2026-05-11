@@ -13,7 +13,7 @@ Music App, Final Project
  - spritework - partially done
  - keyboard interaction - partially done
  - adding dialogue - need to flesh out
- - custom keybinds if I have time
+ - custom keybind menu
  - finish popup
  */
 
