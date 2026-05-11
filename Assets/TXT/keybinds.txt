@@ -1,7 +1,7 @@
 z-Z // select
  - // pause
-x-X // reset dialogue
-+-+ // skip/back
++-+ // reset dialogue
+x-X // skip/back
 k-K // vol down
 l-L // vol up
 s-S // shuffle
