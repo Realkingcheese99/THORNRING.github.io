@@ -1,5 +1,3 @@
-// - menuType = 1
-//I'm feeling lucky
 void menu0() {
   if (menuType == 1) {
     popupstatus = abs(popupstatus-1);
@@ -19,6 +17,7 @@ void menu0() {
 //Settings
 void menu1() {
   if (menuType == 1) {
+    menuType = 4;
   } else {
     xz = 68;
   }
@@ -125,7 +124,7 @@ void button3() {
   } else if (shuffle == 1) {
     current = round(random(mus_count-1));
   } else if (shuffle == 2) {
-    if (counter[2]+1 < mus_count) {
+    if (counter[2]+1 == mus_count) {
       shuffledList.shuffle();
       counter[2] = 0;
     } else {
@@ -135,8 +134,6 @@ void button3() {
   }
   playMus();
   buttonActive[3] = 1;
-  println("current: " + current);
-  println("prevMus: " + prevMus);
 }
 
 void button4() {

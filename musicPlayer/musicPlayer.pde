@@ -31,6 +31,8 @@ Minim minim;
 
 //keybinds
 String[] keybinds;
+int bindKey;
+int targetKeybind;
 
 //mus control
 int shuffle;
@@ -266,7 +268,7 @@ void setup() {
   buttons = new int[2];
   shift = 0;
   clickbait_num = 18;
-  clickbait = loadStrings("../Assets/DIA/popupTitles.txt");
+  clickbait = loadStrings("../Assets/TXT/popupTitles.txt");
   buttonActive = new int[5];
   buttonType = new int[5];
   buttonShift = new int[5];
@@ -282,6 +284,8 @@ void setup() {
   counter[0] = 0;
   counter[1] = 0;
   counter[2] = 0;
+  bindKey = 0;
+  targetKeybind = 0;
 
   buttonSize = 13*scrW/450;
   shuffledList = new IntList();
@@ -290,13 +294,13 @@ void setup() {
   }
   loopCount = 0;
   prevSongs = new IntList();
-  keybinds = loadStrings("../Assets/DIA/keybinds.txt");
+  keybinds = loadStrings("../Assets/TXT/keybinds.txt");
 
   //TXT
   textAlign(LEFT, BASELINE);
-  dialogue = loadStrings("../Assets/DIA/Dialogue.txt");
+  dialogue = loadStrings("../Assets/TXT/Dialogue.txt");
   decay = 0.9;
-  common = createFont("../Assets/DIA/common.ttf", 32);
+  common = createFont("../Assets/TXT/common.ttf", 32);
   iWhile = 0;
   fontSize = scrH;
   textFont(common, fontSize);
@@ -325,12 +329,6 @@ void setup() {
 
 
 void draw() {
-  //refresh();
-  /*if(shift == 1){
-   for(int i = 1; i < 4; i++) {
-   buttonType[i] = ;
-   }
-   } */
 
   if (popupX<cH+songlistDivW) {
     popupX=cH+songlistDivW;
@@ -381,17 +379,6 @@ void draw() {
       fill(#FFFFFF);
     }
   }
-  //image(labels[floor(z-offset/4)], 0, scroll+cH*z*ratio*5, (songlistDivW+cH), cH/decay);
-
-
-  /*
-        if (z==current && pause == false) {
-   fill(#FFFF00);
-   } else {
-   fill(#FFFFFF);
-   }
-   */
-  // text(MUS_DATA[z].title(), 6*cH/5, scroll+((2*cH/3)+((z)*cH*ratio))-cH/2, decay*songlistDivW, cH);
   fill(#FFFFFF);
 
 
@@ -402,10 +389,7 @@ void draw() {
     furthestLine = 0;
   }
 
-  //text(frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+1)*scrW/100, cH/2);
-  //float frmr = 1/(dt/1000);
   float afrmr = frmc/((millis()+1/1000));
-  //text(frmr, (92-(2.7128/2)*floor((log(frmr))/log(10))+1)*scrW/100, cH);
 
 
 
@@ -417,24 +401,7 @@ void draw() {
   }
 
 
-  //shop background
 
-  //image(shop, 0, 0, scrW - (cH + 2*cW), scrH+100);
-
-
-
-
-  //image(speechBubble, spamDivX-1.7*cH*150/86, spamDivY+3*cH, 2*cH*150/86, 2*cH);
-
-
-  //image(neutral, spamDivX, spamDivY, spamDivW, spamDivH);
-
-
-  //rect(exitDivX, 0, exitDivWH, exitDivWH);
-
-
-
-  //rect(dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
   if (menuType != 3) {
     image(dialogueBox, dialogueDivX, dialogueDivY, dialogueDivW, dialogueDivH);
   } else {
@@ -450,7 +417,6 @@ void draw() {
     textFont(common, 2*fontSize/5);
     text(clickbait[(clickbait_random*2)+1], startPosX, popupY+cH/2, scrW/7, scrW/5);
   }
-  //  popupstatus = false;
   if (popupstatus == 1) {
     position = float(MUS[current].position());
     length = MUS[current].length();
@@ -548,9 +514,10 @@ void draw() {
 
   //fps label
   textFont(common, 2*fontSize/3);
+  textAlign(LEFT);
   rndfrmr = round(frmr*10);
   frmrLbl = "fps: "+rndfrmr/10;
-  text(frmrLbl, ((72-(2.7128/2)*floor((log(frmr)))/log(10.000))-10)*scrW/100, 9*scrH/10);// y = 3*cH/2
+  text(frmrLbl, 3*scrW/5, 9*scrH/10);// y = 3*cH/2
   //text("framecount: ", frmc, (92-(2.7128/2)*floor((log(frmc))/log(10))+11)*scrW/100, cH/2, cH/2);
   for (int i = 0; i<5; i++) {
     if (mouseX>=startPosX+i*buttonSize && mouseX<startPosX+(i+1)*buttonSize && mouseY>=startPosY-2*cW/5 && mouseY <= startPosY-2*cW/5+buttonSize) { //&& mouseY <= startPosY+buttonSize
@@ -664,14 +631,30 @@ void keyPressed() {
   } else if (key == keybinds[7].charAt(0) || key == keybinds[7].charAt(2)) {
     counter[0]++;
     buttonType[0] = counter[0] % 3;
+  } else if(key == keybinds[9].charAt(0) || key == keybinds[9].charAt(2)) {
+    if(shift == 1) {
+      targetKeybind++;
+    } else {
+      targetKeybind--;
+    }
+    println(targetKeybind);
   }
 }
 
 void keyReleased() {
+  if(bindKey == 1) {
+    keybinds[targetKeybind] = str(key).toLowerCase() + "-" + str(key).toUpperCase() +  keybinds[targetKeybind].substring(3);
+    println(keybinds[targetKeybind]);
+    saveStrings("../Assets/TXT/keybinds.txt", keybinds);
+    bindKey = 0;
+  }
   if (key == CODED) {
     if (keyCode == SHIFT) {
       shift = 0;
     }
+  }
+  if(key == keybinds[8].charAt(0)) {
+    bindKey = 1;
   }
 }
 
