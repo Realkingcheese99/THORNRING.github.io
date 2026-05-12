@@ -18,13 +18,14 @@ void menu0() {
 void menu1() {
   if (menuType == 1) {
     menuType = 4;
-  } else {
+  } else if(menuType != 4) {
     xz = 68;
   }
 }
 
 //Talking
 void menu2() {
+  
   if (menuType == 1) {
     xz = 6;
     buttonCount = 5;
