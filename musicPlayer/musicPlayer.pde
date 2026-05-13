@@ -500,26 +500,26 @@ void draw() {
     text("FEAR", (cH+songlistDivW)*1.2, 53*scrH/90 + 3*cH*9/10 +cH*2/5);
     text("EXIT AND BUY MORE!!", (cH+songlistDivW)*1.2, 53*scrH/90 + 4*cH*9/10 +cH*2/5);
   } else if (menuType == 4) {
-    if(submenu == 0) {
-    textFont(common, fontSize);
-    text("KEYBINDS", (cH+songlistDivW)*1.2, 53*scrH/90 +cH*2/5);
-    text("MUSIC", (cH+songlistDivW)*1.2, 53*scrH/90 + cH*9/10 +cH*2/5);
-    text("DEVELOPMENT", (cH+songlistDivW)*1.2, 53*scrH/90 + 2*cH*9/10 +cH*2/5);
-    text("BUTTON4", (cH+songlistDivW)*1.2, 53*scrH/90 + 3*cH*9/10 +cH*2/5);
-    text("EXIT AND BUY MORE!!", (cH+songlistDivW)*1.2, 53*scrH/90 + 4*cH*9/10 +cH*2/5);
-    } else if(submenu == 1) {
+    if (submenu == 0) {
+      textFont(common, fontSize);
+      text("KEYBINDS", (cH+songlistDivW)*1.2, 53*scrH/90 +cH*2/5);
+      text("MUSIC", (cH+songlistDivW)*1.2, 53*scrH/90 + cH*9/10 +cH*2/5);
+      text("DEVELOPMENT", (cH+songlistDivW)*1.2, 53*scrH/90 + 2*cH*9/10 +cH*2/5);
+      text("BUTTON4", (cH+songlistDivW)*1.2, 53*scrH/90 + 3*cH*9/10 +cH*2/5);
+      text("EXIT AND BUY MORE!!", (cH+songlistDivW)*1.2, 53*scrH/90 + 4*cH*9/10 +cH*2/5);
+    } else if (submenu == 1) {
       textFont(common, 2*fontSize/3);
-      for(int x = 0; x < 2; x++) {
-        for(int y = 0; y < 6; y++) {
+      for (int x = 0; x < 2; x++) {
+        for (int y = 0; y < 6; y++) {
           println(x + ", " + y);
           println(5*x+y);
           String display;
-          if(keybinds.length > 6*x+y) {
+          if (keybinds.length > 6*x+y) {
             display = keybinds[6*x+y].substring(7) + ": " + keybinds[5*x+y].charAt(0);
           } else {
             display = "";
           }
-          
+
           text(display, (cH+songlistDivW)*1.2+x*3*cH, 56*scrH/90 +2*y*cH*35/100);
         }
       }
@@ -529,10 +529,10 @@ void draw() {
   if (soulLocation == 0) {
     image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
   } else if (soulLocation == 1) {
-    if(submenu == 1) {
+    if (submenu == 1) {
       image(soul, (cH+songlistDivW)*1.1, 53*scrH/90 +2*menuY*cH*35/100, cW/5, cW/5);
     } else {
-    image(soul, (cH+songlistDivW)*1.1, 53*scrH/90 + menuY*cH*9/10, cW/5, cW/5);
+      image(soul, (cH+songlistDivW)*1.1, 53*scrH/90 + menuY*cH*9/10, cW/5, cW/5);
     }
   }
 
