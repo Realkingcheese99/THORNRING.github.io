@@ -144,6 +144,13 @@ A DEAL.  +
 3 2 1 // fear 6
 * ... BUT IT SOUNDED LIKE THEY  +
   WERE TALKING TO YOU.  +
+4 2 // options
+[[Change]]  +
+ SETTINGS  +
+4 2 // keybinds 
+CHANGE  +
+DEVICE  +
+
 
 
 

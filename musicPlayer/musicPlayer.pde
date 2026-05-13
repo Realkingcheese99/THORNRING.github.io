@@ -29,6 +29,9 @@ Minim minim;
 
 // --global var
 
+//settings
+int submenu;
+
 //keybinds
 String[] keybinds;
 int bindKey;
@@ -496,12 +499,41 @@ void draw() {
     }
     text("FEAR", (cH+songlistDivW)*1.2, 53*scrH/90 + 3*cH*9/10 +cH*2/5);
     text("EXIT AND BUY MORE!!", (cH+songlistDivW)*1.2, 53*scrH/90 + 4*cH*9/10 +cH*2/5);
+  } else if (menuType == 4) {
+    if(submenu == 0) {
+    textFont(common, fontSize);
+    text("KEYBINDS", (cH+songlistDivW)*1.2, 53*scrH/90 +cH*2/5);
+    text("MUSIC", (cH+songlistDivW)*1.2, 53*scrH/90 + cH*9/10 +cH*2/5);
+    text("DEVELOPMENT", (cH+songlistDivW)*1.2, 53*scrH/90 + 2*cH*9/10 +cH*2/5);
+    text("BUTTON4", (cH+songlistDivW)*1.2, 53*scrH/90 + 3*cH*9/10 +cH*2/5);
+    text("EXIT AND BUY MORE!!", (cH+songlistDivW)*1.2, 53*scrH/90 + 4*cH*9/10 +cH*2/5);
+    } else if(submenu == 1) {
+      textFont(common, 2*fontSize/3);
+      for(int x = 0; x < 2; x++) {
+        for(int y = 0; y < 6; y++) {
+          println(x + ", " + y);
+          println(5*x+y);
+          String display;
+          if(keybinds.length > 6*x+y) {
+            display = keybinds[6*x+y].substring(7) + ": " + keybinds[5*x+y].charAt(0);
+          } else {
+            display = "";
+          }
+          
+          text(display, (cH+songlistDivW)*1.2+x*3*cH, 56*scrH/90 +2*y*cH*35/100);
+        }
+      }
+    }
   }
 
   if (soulLocation == 0) {
     image(soul, 39*scrW/50, 53*scrH/90 + menuY*cH, cW/5, cW/5);
   } else if (soulLocation == 1) {
+    if(submenu == 1) {
+      image(soul, (cH+songlistDivW)*1.1, 53*scrH/90 +2*menuY*cH*35/100, cW/5, cW/5);
+    } else {
     image(soul, (cH+songlistDivW)*1.1, 53*scrH/90 + menuY*cH*9/10, cW/5, cW/5);
+    }
   }
 
 
@@ -610,12 +642,14 @@ void keyPressed() {
     button2();
   } else if (key == keybinds[2].charAt(0)) {
     xz = 1;
+    println("test");
   } else if (key == keybinds[3].charAt(0)) {
     if (menuType % 2 == 0) {
-      if (menuType == 2) {
+      if (menuType == 2 || menuType == 4) {
         SND[16].play(0);
         menuY = 0;
         xz = 1;
+        submenu = 0;
         buttonCount = 4;
       }
     } else {
@@ -631,8 +665,8 @@ void keyPressed() {
   } else if (key == keybinds[7].charAt(0) || key == keybinds[7].charAt(2)) {
     counter[0]++;
     buttonType[0] = counter[0] % 3;
-  } else if(key == keybinds[9].charAt(0) || key == keybinds[9].charAt(2)) {
-    if(shift == 1) {
+  } else if (key == keybinds[9].charAt(0) || key == keybinds[9].charAt(2)) {
+    if (shift == 1) {
       targetKeybind++;
     } else {
       targetKeybind--;
@@ -642,7 +676,7 @@ void keyPressed() {
 }
 
 void keyReleased() {
-  if(bindKey == 1) {
+  if (bindKey == 1) {
     keybinds[targetKeybind] = str(key).toLowerCase() + "-" + str(key).toUpperCase() +  keybinds[targetKeybind].substring(3);
     println(keybinds[targetKeybind]);
     saveStrings("../Assets/TXT/keybinds.txt", keybinds);
@@ -653,7 +687,7 @@ void keyReleased() {
       shift = 0;
     }
   }
-  if(key == keybinds[8].charAt(0)) {
+  if (key == keybinds[8].charAt(0)) {
     bindKey = 1;
   }
 }

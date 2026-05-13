@@ -1,10 +1,10 @@
-z-Z // select
- - // pause
-+-+ // reset dialogue
-x-X // skip/back
-k-K // vol down
-l-L // vol up
-s-S // shuffle
-q-Q // loop
+z-Z // Select
+ -  // Pause
++-+ // Reset
+x-X // Skip/Back
+k-K // Vol Down
+l-L // Vol Up
+s-S // Shuffle
+q-Q // Loop
 i-I // change select keybind
 d-D // change keybind index

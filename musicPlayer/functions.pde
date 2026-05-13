@@ -9,28 +9,36 @@ void menu0() {
     } else {
       refresh();
     }
-  } else {
+  } else if (menuType == 2) {
     xz = 9;
+  } else if (menuType == 4) {
+    xz = 150;
+    submenu = 1;
+    buttonCount = 6;
   }
 }
 
 //Settings
 void menu1() {
   if (menuType == 1) {
+    buttonCount = 5;
     menuType = 4;
-  } else if(menuType != 4) {
+    xz = 147;
+    menuY = 0;
+  } else if (menuType == 2) {
     xz = 68;
+  } else if (menuType == 4) {
   }
 }
 
 //Talking
 void menu2() {
-  
+
   if (menuType == 1) {
     xz = 6;
     buttonCount = 5;
     menuY = 0;
-  } else {
+  } else if (menuType == 2) {
     if (knight == false) {
       xz = 96;
       knight = true;
@@ -47,14 +55,14 @@ int z;
 void menu3() {
   if (menuType == 1) {
     exit();
-  } else {
+  } else if (menuType == 2) {
     xz = 131;
   }
 }
 
 void menu4() {
   if (menuType==1) {
-  } else {
+  } else if (menuType == 2) {
     xz = 1;
     buttonCount = 4;
     menuY = 0;
