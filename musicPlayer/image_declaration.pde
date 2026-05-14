@@ -12,3 +12,5 @@ PImage pause2;
 PImage talk;
 PImage[] labels;
 PImage speechBubble;
+PImage slider0;
+PImage slider1;

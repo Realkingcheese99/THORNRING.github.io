@@ -12,9 +12,13 @@ void menu0() {
   } else if (menuType == 2) {
     xz = 9;
   } else if (menuType == 4) {
-    xz = 150;
-    submenu = 1;
-    buttonCount = 6;
+    if (submenu == 0) {
+      xz = 150;
+      submenu = 1;
+      buttonCount = 6;
+    } else if (submenu == 3) {
+      showFps = toggle(showFps);
+    }
   }
 }
 
@@ -28,12 +32,16 @@ void menu1() {
   } else if (menuType == 2) {
     xz = 68;
   } else if (menuType == 4) {
+    if (submenu == 0) {
+      menuY = 0;
+      submenu = 2;
+      xz = 159;
+    }
   }
 }
 
 //Talking
 void menu2() {
-
   if (menuType == 1) {
     xz = 6;
     buttonCount = 5;
@@ -44,6 +52,13 @@ void menu2() {
       knight = true;
     } else {
       xz = 108;
+    }
+  } else if (menuType == 4) {
+    if (submenu == 0) {
+      menuY = 0;
+      submenu = 3;
+      xz = 156;
+      //showFps = toggle(showFps);
     }
   }
 }
@@ -66,6 +81,12 @@ void menu4() {
     xz = 1;
     buttonCount = 4;
     menuY = 0;
+  } else if (menuType == 4) {
+    if(submenu == 0) {
+      xz = 1;
+      buttonCount = 4;
+      menuY = 0;
+    }
   }
 }
 

@@ -150,7 +150,15 @@ A DEAL.  +
 4 2 // keybinds 
 CHANGE  +
 DEVICE  +
-
+4 2 // key select prompt
+ENTER  +
+KEY  +
+4 2 // dev options
+DEVELOPER  +
+OPTIONS  +
+4 2 // music settings
+ADJUST  +
+MUSIC  +
 
 
 
