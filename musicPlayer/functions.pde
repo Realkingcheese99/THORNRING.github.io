@@ -202,4 +202,5 @@ void playMus() {
   } else if (buttonType[0] == 2) {
     MUS[current].loop();
   }
+  MUS[current].setGain((volPercent*35)-35);
 }

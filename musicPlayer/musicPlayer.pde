@@ -296,7 +296,7 @@ void setup() {
   targetKeybind = 0;
   menuX = 0;
   showFps = 0;
-  sliderW = 4*cH;
+  sliderW = 3*cH;
   volPercent = 1;
 
   buttonSize = 13*scrW/450;
@@ -430,12 +430,13 @@ void draw() {
     text(clickbait[(clickbait_random*2)+1], startPosX, popupY+cH/2, scrW/7, scrW/5);
   }
   if (popupstatus == 1) {
-    position = float(MUS[current].position());
+    position = (float(MUS[current].position())/0.995);
     length = MUS[current].length();
     progress = position/length;
     strokeWeight(20);
     stroke(#ff7f27);
     line(startPosX, startPosY, startPosX+scale, startPosY);
+    println(progress);
     strokeWeight(10);
     stroke(#FFFF00);
     line(startPosX, startPosY, startPosX+2*scale*progress, startPosY);
@@ -584,7 +585,7 @@ void draw() {
       buttonActive[i] = 0;
     }
   }
-  if (float(MUS[current].position()) >=  MUS[current].length()/2.04) {
+  if ((200*progress) >= 100) { //
     if (buttonType[0] == 0) {
       button3();
     } else if (buttonType[0] == 1) {
@@ -767,6 +768,8 @@ void mouseDragged() {
   }
   if(menuType == 4 && submenu == 2) {
     if((cH+songlistDivW)*1.2 <= mouseX && mouseX <(cH+songlistDivW)*1.2+sliderW && 56*scrH/90 +cH*7/20 - sliderW/16 <= mouseY && mouseY < 56*scrH/90 +cH*7/20 + 3*sliderW/16) {
+      MUS[current].setGain((35*(mouseX-(cH+songlistDivW)*1.2)/(sliderW))-35); //((cH+songlistDivW)*1.2) + volPercent * sliderW*0.9 // (mouseX-(cH+songlistDivW)*1.2)
+      volPercent = (MUS[current].getGain()+35)/35;
     }
   }
 }
