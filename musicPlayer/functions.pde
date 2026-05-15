@@ -114,8 +114,8 @@ void button0() {
 }
 
 void button1() {
-  if (currentSong > 0) {
-    current = songList[currentSong-1];
+  if (songIndex > 0) {
+    songIndex--;
   }
 }
 
@@ -137,8 +137,17 @@ void button2() {
 }
 
 void button3() {
-  prevSongs.append(current);
+  if(songIndex == prevSongs.size()) {
+      prevSongs.append(current);
+
+  } else {
+    
+  }
+    current = prevSongs.get(songIndex);
+    songIndex++;
+
   prevMus = current;
+
   MUS[current].rewind();
   MUS[current].pause();
   buttonType[2] = 1;
@@ -203,4 +212,8 @@ void playMus() {
     MUS[current].loop();
   }
   MUS[current].setGain((volPercent*35)-35);
+}
+
+void nextSong() {
+  
 }

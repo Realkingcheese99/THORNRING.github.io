@@ -61,6 +61,7 @@ IntList shuffledList;
 int shuffleIndex;
 int loopCount;
 IntList prevSongs;
+int songIndex;
 
 
 
@@ -299,6 +300,7 @@ void setup() {
   sliderW = 3*cH;
   volPercent = 1;
   prevPos = 0;
+  songIndex = 0;
 
   buttonSize = 13*scrW/450;
   shuffledList = new IntList();
