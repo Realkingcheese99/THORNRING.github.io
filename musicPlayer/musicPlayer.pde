@@ -777,8 +777,8 @@ void mouseDragged() {
   }
   if (menuType == 4 && submenu == 2) {
     if ((cH+songlistDivW)*1.2 <= mouseX && mouseX <(cH+songlistDivW)*1.2+sliderW && 56*scrH/90 +cH*7/20 - sliderW/16 <= mouseY && mouseY < 56*scrH/90 +cH*7/20 + 3*sliderW/16) {
-      MUS[current].setGain(((15*(mouseX-(cH+songlistDivW)*1.2)/(sliderW)))-15); //((cH+songlistDivW)*1.2) + volPercent * sliderW*0.9 // (mouseX-(cH+songlistDivW)*1.2)
-      volPercent = (MUS[current].getGain()+15)/15;
+      MUS[current].setGain(((35*(mouseX-(cH+songlistDivW)*1.2)/(sliderW)))-35); //((cH+songlistDivW)*1.2) + volPercent * sliderW*0.9 // (mouseX-(cH+songlistDivW)*1.2)
+      volPercent = (MUS[current].getGain()+35)/35;
     }
   }
 }
