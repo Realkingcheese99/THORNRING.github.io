@@ -62,6 +62,7 @@ int shuffleIndex;
 int loopCount;
 IntList prevSongs;
 int songIndex;
+int mus_offset;
 
 
 
@@ -203,7 +204,7 @@ void setup() {
   shop = loadImage("../Assets/IMG/SPAM/shop.png");
   neutral = loadImage("../Assets/IMG/SPAM/spamNeutral.png");
   dialogueBox = loadImage("../Assets/IMG/BOX/DialogueBox.png");
-  popup = loadImage("../Assets/IMG/BOX/popup.png");
+  popup = loadImage("../Assets/IMG/BOX/Popup.png");
   soul = loadImage("../Assets/IMG/BTN/SOUL.png");
   songTitleBox = loadImage("../Assets/IMG/BOX/box.png");
   talk = loadImage("../Assets/IMG/BOX/talk.png");
@@ -300,7 +301,8 @@ void setup() {
   sliderW = 3*cH;
   volPercent = 1;
   prevPos = 0;
-  songIndex = 0;
+  songIndex = 1;
+  mus_offset = 0;
 
   buttonSize = 13*scrW/450;
   shuffledList = new IntList();
@@ -619,6 +621,16 @@ void keyPressed() {
   if (key == CODED) {
     if (keyCode == SHIFT) {
       shift = 1;
+    } else if (shift == 1) {
+      if (keyCode == RIGHT) {
+        mus_offset = MUS[current].position() + 20;
+     //   MUS[current].skip(20);
+        playMus(mus_offset);
+      } else if (keyCode == LEFT) {
+        mus_offset = MUS[current].position() - 20;
+        playMus(mus_offset);
+      //  MUS[current].cue(MUS[current].position()-20);
+      }
     }
   } else {
     if (key == keybinds[4].charAt(0)) {

@@ -116,34 +116,36 @@ void button0() {
 void button1() {
   if (submenu == 0) {
     //reset
-    MUS[current].rewind();
-    MUS[current].pause();
-    //decrement
-    if(songIndex > 1 && songIndex < prevSongs.size()) {
-      songIndex--;
-    } else {
-      songIndex = 1;
-    }
-    println("mus: " +songIndex);
-    if(prevSongs.size() > 0){
-    current = prevSongs.get(songIndex);
-    }
-    //play
-    playMus();
-    /*
+    if (shift == 0) {
+      MUS[current].rewind();
+      MUS[current].pause();
+      //decrement
+      if (songIndex > 0 && songIndex < prevSongs.size()) {
+        songIndex--;
+      } else {
+        songIndex = 0;
+        println("can't go back");
+      }
+      println("mus: " +songIndex);
+      if (prevSongs.size() > 0) {
+        current = prevSongs.get(songIndex);
+      }
+      //play
+      playMus(0);
+      /*
     if (current>0) {
-      current--;
-      playMus();
+       current--;
+       playMus();
+       } else {
+       current=mus_count-1;
+       playMus();
+       }
+       */
     } else {
-      current=mus_count-1;
-      playMus();
+      menuX = toggle(menuX);
+      SND[8].play(0);
     }
-    */
-  } else {
-    menuX = toggle(menuX);
-    SND[8].play(0);
   }
-  
 }
 
 void button2() {
@@ -165,46 +167,47 @@ void button2() {
 
 void button3() {
   //reset
-  MUS[current].rewind();
-  MUS[current].pause();
-  buttonType[2] = 1;
-  if (pause == true) {
-    pause = false;
-  }
-  //increment
-  songIndex++;
-  println(prevSongs);
-  println(songIndex);
-  if (songIndex < prevSongs.size()) {
-    current = prevSongs.get(songIndex);
-  } else {
-    //calculate
-    if (shuffle == 0) {
-      if (current<mus_count-1) {
-        current++;
-      } else {
-        current=0;
-      }
-    } else if (shuffle == 1) {
-      current = round(random(mus_count-1));
-    } else if (shuffle == 2) {
-      if (counter[2]+1 == mus_count) {
-        shuffledList.shuffle();
-        counter[2] = 0;
-      } else {
-        counter[2]++;
-      }
-      current = shuffledList.get(counter[2]);
+  if (shift == 0) {
+    mus_offset = 0;
+    MUS[current].rewind();
+    MUS[current].pause();
+    buttonType[2] = 1;
+    if (pause == true) {
+      pause = false;
     }
-  }
-    if (songIndex >= prevSongs.size()) {
-    prevSongs.append(current);
+    //increment
+    songIndex++;
     println(prevSongs);
+    println(songIndex);
+    if (songIndex < prevSongs.size()) {
+      current = prevSongs.get(songIndex);
+    } else {
+      //calculate
+      if (shuffle == 0) {
+        if (current<mus_count-1) {
+          current++;
+        } else {
+          current=0;
+        }
+      } else if (shuffle == 1) {
+        current = round(random(mus_count-1));
+      } else if (shuffle == 2) {
+        if (counter[2]+1 == mus_count) {
+          shuffledList.shuffle();
+          counter[2] = 0;
+        } else {
+          counter[2]++;
+        }
+        current = shuffledList.get(counter[2]);
+      }
+    }
+    if (songIndex >= prevSongs.size()) {
+      prevSongs.append(current);
+      println(prevSongs);
+    }
+    //play
+    playMus(0);
   }
-  //play
-  playMus();
-
-  //  buttonActive[3] = 1;
 }
 
 void button4() {
@@ -235,15 +238,19 @@ void pauseToggle() {
   }
 }
 
-void playMus() {
+void playMus(int offset) {
   if (buttonType[0] == 0) {
-    MUS[current].play();
+    MUS[current].play(0);
   } else if ( buttonType[0] == 1) {
     MUS[current].loop(1);
   } else if (buttonType[0] == 2) {
     MUS[current].loop();
   }
+  //MUS[current].skip(round(sqrt(MUS[current].position() + offset)));
+  //MUS[current].skip(round(log(MUS[current].position() + offset)/log(2)));
+  MUS[current].skip(offset);
   MUS[current].setGain((volPercent*35)-35);
+  println(MUS[current].position());
 }
 
 void nextSong() {
