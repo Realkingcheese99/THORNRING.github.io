@@ -665,20 +665,7 @@ void keyReleased() {
       }
     }
     if (keyCode == LEFT) {
-      if (submenu == 0) {
-        MUS[current].rewind();
-        MUS[current].pause();
-        if (current>0) {
-          current--;
-          playMus();
-        } else {
-          current=mus_count-1;
-          playMus();
-        }
-      } else {
-        menuX = toggle(menuX);
-        SND[8].play(0);
-      }
+      button1();
     }
   } else if (key == keybinds[0].charAt(0) || key == ENTER || key == keybinds[0].charAt(2)) {
     if (menuType == 4) {

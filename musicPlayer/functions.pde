@@ -82,7 +82,7 @@ void menu4() {
     buttonCount = 4;
     menuY = 0;
   } else if (menuType == 4) {
-    if(submenu == 0) {
+    if (submenu == 0) {
       xz = 1;
       buttonCount = 4;
       menuY = 0;
@@ -114,9 +114,36 @@ void button0() {
 }
 
 void button1() {
-  if (songIndex > 0) {
-    songIndex--;
+  if (submenu == 0) {
+    //reset
+    MUS[current].rewind();
+    MUS[current].pause();
+    //decrement
+    if(songIndex > 1 && songIndex < prevSongs.size()) {
+      songIndex--;
+    } else {
+      songIndex = 1;
+    }
+    println("mus: " +songIndex);
+    if(prevSongs.size() > 0){
+    current = prevSongs.get(songIndex);
+    }
+    //play
+    playMus();
+    /*
+    if (current>0) {
+      current--;
+      playMus();
+    } else {
+      current=mus_count-1;
+      playMus();
+    }
+    */
+  } else {
+    menuX = toggle(menuX);
+    SND[8].play(0);
   }
+  
 }
 
 void button2() {
@@ -137,42 +164,47 @@ void button2() {
 }
 
 void button3() {
-  if(songIndex == prevSongs.size()) {
-      prevSongs.append(current);
-
-  } else {
-    
-  }
-    current = prevSongs.get(songIndex);
-    songIndex++;
-
-  prevMus = current;
-
+  //reset
   MUS[current].rewind();
   MUS[current].pause();
   buttonType[2] = 1;
   if (pause == true) {
     pause = false;
   }
-  if (shuffle == 0) {
-    if (current<mus_count-1) {
-      current++;
-    } else {
-      current=0;
+  //increment
+  songIndex++;
+  println(prevSongs);
+  println(songIndex);
+  if (songIndex < prevSongs.size()) {
+    current = prevSongs.get(songIndex);
+  } else {
+    //calculate
+    if (shuffle == 0) {
+      if (current<mus_count-1) {
+        current++;
+      } else {
+        current=0;
+      }
+    } else if (shuffle == 1) {
+      current = round(random(mus_count-1));
+    } else if (shuffle == 2) {
+      if (counter[2]+1 == mus_count) {
+        shuffledList.shuffle();
+        counter[2] = 0;
+      } else {
+        counter[2]++;
+      }
+      current = shuffledList.get(counter[2]);
     }
-  } else if (shuffle == 1) {
-    current = round(random(mus_count-1));
-  } else if (shuffle == 2) {
-    if (counter[2]+1 == mus_count) {
-      shuffledList.shuffle();
-      counter[2] = 0;
-    } else {
-      counter[2]++;
-    }
-    current = shuffledList.get(counter[2]);
   }
+    if (songIndex >= prevSongs.size()) {
+    prevSongs.append(current);
+    println(prevSongs);
+  }
+  //play
   playMus();
-  buttonActive[3] = 1;
+
+  //  buttonActive[3] = 1;
 }
 
 void button4() {
@@ -215,5 +247,4 @@ void playMus() {
 }
 
 void nextSong() {
-  
 }
