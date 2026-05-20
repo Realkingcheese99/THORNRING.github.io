@@ -72,6 +72,10 @@ void menu3() {
     exit();
   } else if (menuType == 2) {
     xz = 131;
+  } else if (menuType == 4) {
+    if(submenu == 0) {
+      submenu = 4;
+    }
   }
 }
 
@@ -114,7 +118,7 @@ void button0() {
 }
 
 void button1() {
-  if (submenu == 0) {
+  if (submenu == 0 || submenu == 4) {
     //reset
     if (shift == 0) {
       MUS[current].rewind();

@@ -521,7 +521,7 @@ void draw() {
       text("KEYBINDS", (cH+songlistDivW)*1.2, 53*scrH/90 +cH*2/5);
       text("MUSIC", (cH+songlistDivW)*1.2, 53*scrH/90 + cH*9/10 +cH*2/5);
       text("DEBUG", (cH+songlistDivW)*1.2, 53*scrH/90 + 2*cH*9/10 +cH*2/5);
-      text("BUTTON4", (cH+songlistDivW)*1.2, 53*scrH/90 + 3*cH*9/10 +cH*2/5);
+      text("SONG INFO", (cH+songlistDivW)*1.2, 53*scrH/90 + 3*cH*9/10 +cH*2/5);
       text("EXIT AND BUY MORE!!", (cH+songlistDivW)*1.2, 53*scrH/90 + 4*cH*9/10 +cH*2/5);
     } else if (submenu == 1) {
       textFont(common, 3*fontSize/4);
@@ -554,6 +554,11 @@ void draw() {
       } else {
         text("fps: on", (cH+songlistDivW)*1.2, 56*scrH/90 +2*0*cH*35/100);
       }
+    } else if (submenu == 4) {
+      text(MUS_DATA[current].comment(), (cH+songlistDivW)*1.1, 56*scrH/90, scrW-((cH+songlistDivW)*1.1)-3*optDivW/2, 2*cH);
+      float text_offset = ceil(textWidth(MUS_DATA[current].comment())/((cH+songlistDivW)*1.1))*fontSize;
+      text(MUS_DATA[current].author(), (cH+songlistDivW)*1.1, 56*scrH/90 + text_offset, scrW-((cH+songlistDivW)*1.1)-3*optDivW/2, 3*cH);
+      println(text_offset);
     }
   }
 
@@ -624,12 +629,12 @@ void keyPressed() {
     } else if (shift == 1) {
       if (keyCode == RIGHT) {
         mus_offset = MUS[current].position() + 20;
-     //   MUS[current].skip(20);
+        //   MUS[current].skip(20);
         playMus(mus_offset);
       } else if (keyCode == LEFT) {
         mus_offset = MUS[current].position() - 20;
         playMus(mus_offset);
-      //  MUS[current].cue(MUS[current].position()-20);
+        //  MUS[current].cue(MUS[current].position()-20);
       }
     }
   } else {
@@ -669,7 +674,7 @@ void keyReleased() {
       }
     }
     if (keyCode == RIGHT) {
-      if (submenu == 0) {
+      if (submenu == 0 || submenu == 4) {
         button3();
       } else {
         menuX = toggle(menuX);
