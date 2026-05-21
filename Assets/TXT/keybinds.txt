@@ -6,3 +6,5 @@ k-K // Vol Down
 l-L // Vol Up
 s-S // Shuffle
 q-Q // Loop
+f-F // FRCprevSong
+g-G // FRCnextSong

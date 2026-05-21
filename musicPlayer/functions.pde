@@ -124,12 +124,14 @@ void button1() {
       MUS[current].rewind();
       MUS[current].pause();
       //decrement
-      if (songIndex > 0 && songIndex < prevSongs.size()) {
+      println((songIndex > 0 && songIndex < prevSongs.size()+1));
+      if (songIndex > 0 && songIndex <= prevSongs.size()) {
         songIndex--;
       } else {
         songIndex = 0;
         println("can't go back");
       }
+      println(prevSongs);
       println("mus: " +songIndex);
       if (prevSongs.size() > 0) {
         current = prevSongs.get(songIndex);
@@ -181,8 +183,8 @@ void button3() {
     }
     //increment
     songIndex++;
-    println(prevSongs);
-    println(songIndex);
+   
+    
     if (songIndex < prevSongs.size()) {
       current = prevSongs.get(songIndex);
     } else {
@@ -209,6 +211,8 @@ void button3() {
       prevSongs.append(current);
       println(prevSongs);
     }
+     println(prevSongs);
+    println("mus: " +songIndex);
     //play
     playMus(0);
   }

@@ -741,7 +741,15 @@ void keyReleased() {
   } else if (key == keybinds[7].charAt(0) || key == keybinds[7].charAt(2)) {
     counter[0]++;
     buttonType[0] = counter[0] % 3;
-  } /*else if (key == keybinds[9].charAt(0) || key == keybinds[9].charAt(2)) {
+  } else if (key == keybinds[8].charAt(0) || key == keybinds[8].charAt(2)) {
+    songIndex-=1;
+    MUS[current].rewind();
+    MUS[current].pause();
+    println("test" + prevSongs.get(0));
+    println(prevSongs);
+    current = prevSongs.get(songIndex);
+    playMus(0);
+  }/*else if (key == keybinds[9].charAt(0) || key == keybinds[9].charAt(2)) {
    if (shift == 1) {
    targetKeybind++;
    } else {
